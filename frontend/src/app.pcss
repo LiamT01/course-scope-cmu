@@ -1,0 +1,26 @@
+/* Write your global styles here, in PostCSS syntax */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    * {
+        @apply transition-colors !important;
+    }
+
+    svg {
+        @apply focus:outline-none !important;
+    }
+
+    button, input, textarea, select {
+        @apply focus-within:ring-0 !important;
+    }
+
+    input, textarea, select {
+        @apply focus-visible:ring-1 !important;
+    }
+
+    button, input[type="radio"] {
+        @apply focus-visible:ring-2 !important;
+    }
+}
