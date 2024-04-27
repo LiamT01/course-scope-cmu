@@ -9,7 +9,7 @@
 
 <Header/>
 
-<div class="relative container flex flex-col mx-auto px-4 text-gray-900 min-h-[calc(100vh-238px)] lg:min-h-[calc(100vh-182px)]">
+<div class="relative container flex flex-col mx-auto px-4 text-gray-900 min-h-[calc(100vh-274px)] lg:min-h-[calc(100vh-218px)]">
     <slot/>
 </div>
 

@@ -6,7 +6,7 @@
 
 <div class="bg-gray-50 mt-4 p-8 border-t border-gray-300">
     <div class="flex flex-col items-center gap-y-4 text-gray-600">
-        <p class="text-center">Copyright © {year} CourseScope CMU. All rights reserved.</p>
+        <p class="text-center">{year} CourseScope CMU</p>
         <p class="flex justify-center items-center gap-x-4 whitespace-nowrap dark:text-white">
             <a href="mailto:course.scope.cmu@gmail.com">
                 <EnvelopeOutline/>
