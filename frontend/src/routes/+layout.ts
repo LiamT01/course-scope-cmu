@@ -2,6 +2,12 @@ import {expiryStore, isTokenValid, tokenStore, userStore} from "$lib/auth/stores
 import {addErrorToast} from "$lib/toast/stores";
 import {fetchWithinLoad} from "$lib/auth/fetchClient";
 import type {User} from "$lib/types";
+import {dev} from '$app/environment';
+import {inject} from '@vercel/analytics';
+import {injectSpeedInsights} from '@vercel/speed-insights/sveltekit';
+
+inject({mode: dev ? 'development' : 'production'});
+injectSpeedInsights();
 
 export const ssr = false;
 
