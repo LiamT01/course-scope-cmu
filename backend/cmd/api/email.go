@@ -21,7 +21,7 @@ type emailServer struct {
 }
 
 func newEmailServer(host, port, hostUser, hostPassword, from, frontendLink string) *emailServer {
-	// Remove trailing slash from frontendLink and backendLink
+	// Remove trailing slash from frontendLink
 	if frontendLink[len(frontendLink)-1] == '/' {
 		frontendLink = frontendLink[:len(frontendLink)-1]
 	}
