@@ -5,6 +5,7 @@
     import {onMount} from "svelte";
     import CourseOfferingTable from "$lib/course/CourseOfferingTable.svelte";
     import {fetchWithinPage} from "$lib/auth/fetchClient";
+    import {listOfferingsPageSize} from "$lib/constants";
 
     export let instructor: Instructor;
 
@@ -26,7 +27,7 @@
     });
 
     async function fetchInstructorOfferings() {
-        const instructorOfferingsResponse = await fetchWithinPage(`/api/offerings?instructor_ids=${instructor.id}`);
+        const instructorOfferingsResponse = await fetchWithinPage(`/api/offerings?instructor_ids=${instructor.id}&page_size=${listOfferingsPageSize}`);
         const instructorOfferingsData = await instructorOfferingsResponse.json() as {
             items: Offering[],
             metadata: Metadata

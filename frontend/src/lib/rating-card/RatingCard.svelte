@@ -22,6 +22,7 @@
     import PrimaryButton from "$lib/button/PrimaryButton.svelte";
     import {deleteRatingWithinPage} from "$lib/auth/authFetch";
     import {invalidateAll} from "$app/navigation";
+    import {listOfferingsPageSize} from "$lib/constants";
 
     export let rating: Rating;
     const onLike = async () => {
@@ -106,7 +107,7 @@
 
     const fetchCourseOfferings = async () => {
         const courseOfferingsResponse = await fetchWithinPage(
-            `/api/offerings?course_id=${rating.offering.course.id}`
+            `/api/offerings?course_id=${rating.offering.course.id}&page_size=${listOfferingsPageSize}`
         );
         const courseOfferingsData: { items: Offering[], metadata: Metadata } = await courseOfferingsResponse.json();
         const courseOfferings = courseOfferingsData.items;
