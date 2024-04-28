@@ -28,7 +28,7 @@ export const load = async ({fetch, params, url, data}) => {
 
     const courseOfferingsResponse = await fetchWithinLoad(
         fetch,
-        `/api/offerings?course_id=${courseID}`,
+        `/api/offerings?course_id=${courseID}&page_size=20`,
         {
             token: data.token,
             expiry: data.expiry,

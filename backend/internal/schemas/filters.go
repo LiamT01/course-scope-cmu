@@ -116,14 +116,36 @@ func (s SortIn) NewOrderByArrays(sortMap map[string]pg.Expression) ([]pg.OrderBy
 			sort = append(sort, v.DESC())
 		}
 	}
+
 	updateAt, ok := sortMap["updated_at"]
 	if ok && updateAt != nil {
 		sort = append(sort, updateAt.DESC())
 	}
-	ID, ok := sortMap["id"]
-	if !ok || ID == nil {
-		return nil, errors.New("id column not in sort map")
+
+	year, ok := sortMap["year"]
+	if ok && year != nil {
+		sort = append(sort, year.DESC())
 	}
-	sort = append(sort, ID.ASC())
+
+	semester, ok := sortMap["semester"]
+	if ok && semester != nil {
+		sort = append(sort, semester.ASC())
+	}
+
+	number, ok := sortMap["number"]
+	if ok && number != nil {
+		sort = append(sort, number.ASC())
+	}
+
+	name, ok := sortMap["name"]
+	if ok && name != nil {
+		sort = append(sort, name.ASC())
+	}
+
+	ID, ok := sortMap["id"]
+	if ok && ID != nil {
+		sort = append(sort, ID.ASC())
+	}
+
 	return sort, nil
 }

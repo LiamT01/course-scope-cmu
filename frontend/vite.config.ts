@@ -6,7 +6,7 @@ export default defineConfig({
 	server: {
 		proxy: {
 			'/api': {
-				target: 'https://course-scope-cmu.alwaysdata.net/',
+				target: 'http://localhost:8100/',
 				changeOrigin: true,
 				rewrite: (path) => path.replace(/^\/api/, ''),
 				secure: true,

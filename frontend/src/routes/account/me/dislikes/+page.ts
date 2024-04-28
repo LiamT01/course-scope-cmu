@@ -17,7 +17,7 @@ export const load = async ({fetch, url, data}) => {
     const pageSize: number = parseInt(url.searchParams.get('page_size') ?? '10');
     const ratingsResponse = await fetchWithinLoad(
         fetch,
-        `/api/ratings/my-dislikes?page=${page}&page_size=${pageSize}`,
+        `/api/ratings/my-dislikes?page=${page}&page_size=${pageSize}&sort=-updated_at`,
         {
             token: data.token,
             expiry: data.expiry,
