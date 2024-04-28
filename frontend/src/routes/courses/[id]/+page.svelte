@@ -43,7 +43,7 @@
         ...data.courseOfferings
             .map(offering => offering.semester)
             .filter((semester, index, self) => self.indexOf(semester) === index)
-            .sort((a, b) => b.localeCompare(a))
+            .sort((a, b) => a.localeCompare(b))
             .map(semester => ({value: semester, name: semester}))
     ];
 
@@ -135,7 +135,7 @@
                 sort: data.sort,
                 page: data.metadata.current_page - 1,
                 pageSize: data.metadata.page_size,
-            })
+            });
             const currentScrollY = window.scrollY;
             goto(`?${allQuery}`)
                 .then(() => scrollTo({top: currentScrollY}))
@@ -153,7 +153,7 @@
                 sort: data.sort,
                 page: data.metadata.current_page + 1,
                 pageSize: data.metadata.page_size,
-            })
+            });
             const currentScrollY = window.scrollY;
             goto(`?${allQuery}`)
                 .then(() => scrollTo({top: currentScrollY}))
@@ -173,7 +173,7 @@
                 sort: data.sort,
                 page: e.detail.page,
                 pageSize: data.metadata.page_size,
-            })
+            });
             const currentScrollY = window.scrollY;
             goto(`?${allQuery}`)
                 .then(() => scrollTo({top: currentScrollY}))

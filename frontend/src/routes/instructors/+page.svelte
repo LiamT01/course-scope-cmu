@@ -5,20 +5,35 @@
     import {goto} from "$app/navigation";
     import Title from "$lib/section/Title.svelte";
     import OutlineButton from "$lib/button/OutlineButton.svelte";
+    import makeQueryParams from "$lib/util/makeQueryParams";
 
     export let data: {
         instructors: Instructor[],
         metadata: Metadata,
+        name: string,
+        sort: string,
     };
 
     const previous = () => {
         if (data.metadata.current_page > data.metadata.first_page) {
-            goto(`?page=${data.metadata.current_page - 1}&page_size=${data.metadata.page_size}`);
+            const allQuery = makeQueryParams({
+                name: data.name,
+                sort: data.sort,
+                page: data.metadata.current_page - 1,
+                pageSize: data.metadata.page_size,
+            });
+            goto(`?${allQuery}`);
         }
     };
     const next = () => {
         if (data.metadata.current_page < data.metadata.last_page) {
-            goto(`?page=${data.metadata.current_page + 1}&page_size=${data.metadata.page_size}`);
+            const allQuery = makeQueryParams({
+                name: data.name,
+                sort: data.sort,
+                page: data.metadata.current_page + 1,
+                pageSize: data.metadata.page_size,
+            });
+            goto(`?${allQuery}`);
         }
     };
 
@@ -26,7 +41,13 @@
         if (e.detail.page >= data.metadata.first_page &&
             e.detail.page <= data.metadata.last_page &&
             e.detail.page !== data.metadata.current_page) {
-            goto(`?page=${e.detail.page}&page_size=${data.metadata.page_size}`);
+            const allQuery = makeQueryParams({
+                name: data.name,
+                sort: data.sort,
+                page: e.detail.page,
+                pageSize: data.metadata.page_size,
+            });
+            goto(`?${allQuery}`);
         }
     };
 

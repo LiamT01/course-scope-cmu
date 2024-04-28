@@ -24,5 +24,8 @@ export const load = async ({fetch, url, data}) => {
     return {
         courses: coursesData.items,
         metadata: coursesData.metadata,
+        number,
+        name,
+        sort,
     }
 }
