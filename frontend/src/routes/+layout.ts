@@ -5,6 +5,7 @@ import type {User} from "$lib/types";
 import {dev} from '$app/environment';
 import {inject} from '@vercel/analytics';
 import {injectSpeedInsights} from '@vercel/speed-insights/sveltekit';
+import {apiBaseUrl} from "$lib/constants";
 
 inject({mode: dev ? 'development' : 'production'});
 injectSpeedInsights();
@@ -19,7 +20,7 @@ export const load = async ({data, fetch}) => {
 
     const userResponse = await fetchWithinLoad(
         fetch,
-        "/api/users/me",
+        `${apiBaseUrl}/users/me`,
         {
             token: data.token,
             expiry: data.expiry,

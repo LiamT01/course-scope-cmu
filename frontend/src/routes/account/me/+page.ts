@@ -2,6 +2,7 @@ import {fetchWithinLoad} from "$lib/auth/fetchClient";
 import type {Metadata, Rating, UserStats} from "$lib/types";
 import {userStore} from "$lib/auth/stores";
 import {get} from "svelte/store";
+import {apiBaseUrl} from "$lib/constants";
 
 export const load = async ({fetch, url, data}) => {
     if (!data.token || !data.expiry) {
@@ -19,7 +20,7 @@ export const load = async ({fetch, url, data}) => {
     const pageSize: number = parseInt(url.searchParams.get('page_size') ?? '10');
     const ratingsResponse = await fetchWithinLoad(
         fetch,
-        `/api/ratings/my?page=${page}&page_size=${pageSize}&sort=-updated_at`,
+        `${apiBaseUrl}/ratings/my?page=${page}&page_size=${pageSize}&sort=-updated_at`,
         {
             token: data.token,
             expiry: data.expiry,
@@ -29,7 +30,7 @@ export const load = async ({fetch, url, data}) => {
 
     const userStatsResponse = await fetchWithinLoad(
         fetch,
-        `/api/users/stats/me`,
+        `${apiBaseUrl}/users/stats/me`,
         {
             token: data.token,
             expiry: data.expiry,

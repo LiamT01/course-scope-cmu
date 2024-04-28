@@ -1,6 +1,7 @@
 import makeQueryParams from "$lib/util/makeQueryParams";
 import {fetchWithinLoad} from "$lib/auth/fetchClient";
 import type {Instructor, Metadata} from "$lib/types";
+import {apiBaseUrl} from "$lib/constants";
 
 export const load = async ({fetch, url, data}) => {
     const name = url.searchParams.get('name') ?? '';
@@ -11,7 +12,7 @@ export const load = async ({fetch, url, data}) => {
     const query = makeQueryParams({name, page, pageSize, sort});
     const instructorsResponse = await fetchWithinLoad(
         fetch,
-        `/api/instructors?${query}`,
+        `${apiBaseUrl}/instructors?${query}`,
         {
             token: data.token,
             expiry: data.expiry,

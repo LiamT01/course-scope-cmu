@@ -6,6 +6,7 @@ import {get} from "svelte/store";
 import {addErrorToast, addSuccessToast} from "$lib/toast/stores";
 import {page} from "$app/stores";
 import type {RatingIn} from "$lib/types";
+import {apiBaseUrl} from "$lib/constants";
 
 const andrewIDPattern = /^(?=.{1,20}$)[a-z]+[0-9]*$/;
 const usernamePattern = /^[\w.@+-]{1,30}$/;
@@ -138,7 +139,7 @@ export const submitSignUpFormWithinPage = async (e: Event): Promise<FormSubmitRe
     submitButton.disabled = true;
     submitButton.textContent = "Creating account...";
 
-    const response = await fetchWithinPage('/api/users', {
+    const response = await fetchWithinPage(`${apiBaseUrl}/users`, {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -170,7 +171,7 @@ export const submitPasswordResetRequestLoggedInWithinPage = async (e: Event): Pr
     submitButton.disabled = true;
     submitButton.textContent = "Sending email...";
 
-    const response = await fetchWithinPage('/api/tokens/password-reset', {
+    const response = await fetchWithinPage(`${apiBaseUrl}/tokens/password-reset`, {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -200,7 +201,7 @@ export const submitActivationLinkRequestLoggedInWithinPage = async (e: Event): P
     submitButton.disabled = true;
     submitButton.textContent = "Sending email...";
 
-    const response = await fetchWithinPage('/api/tokens/activation', {
+    const response = await fetchWithinPage(`${apiBaseUrl}/tokens/activation`, {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -239,7 +240,7 @@ export const submitPasswordResetRequestFormWithinPage = async (e: Event): Promis
     submitButton.disabled = true;
     submitButton.textContent = "Sending email...";
 
-    const response = await fetchWithinPage('/api/tokens/password-reset', {
+    const response = await fetchWithinPage(`${apiBaseUrl}/tokens/password-reset`, {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -265,7 +266,7 @@ export const activateAccountWithinPage = async (token: string | null): Promise<b
         return false;
     }
 
-    const response = await fetchWithinPage('/api/users/activated/me', {
+    const response = await fetchWithinPage(`${apiBaseUrl}/users/activated/me`, {
         method: 'PUT',
         headers: {
             'Accept': 'application/json',
@@ -313,7 +314,7 @@ export const submitPasswordResetFormWithinPage = async (e: Event, token: string 
     submitButton.disabled = true;
     submitButton.textContent = "Resetting password...";
 
-    const response = await fetchWithinPage('/api/users/password/me', {
+    const response = await fetchWithinPage(`${apiBaseUrl}/users/password/me`, {
         method: 'PUT',
         headers: {
             'Accept': 'application/json',
@@ -353,7 +354,7 @@ export const submitUsernameChangeFormWithinPage = async (e: Event): Promise<Form
     submitButton.disabled = true;
     submitButton.textContent = "Changing username...";
 
-    const response = await fetchWithinPage('/api/users/username/me', {
+    const response = await fetchWithinPage(`${apiBaseUrl}/users/username/me`, {
         method: 'PUT',
         headers: {
             'Accept': 'application/json',
@@ -477,7 +478,7 @@ export const submitRatingWithinPage = async (e: Event, rating: RatingIn): Promis
     submitButton.disabled = true;
     submitButton.textContent = rating.rating_id ? "Updating..." : "Submitting...";
 
-    const response = await fetchWithinPage(`/api/ratings/${rating.rating_id || ''}`, {
+    const response = await fetchWithinPage(`${apiBaseUrl}/ratings/${rating.rating_id || ''}`, {
         method: rating.rating_id ? 'PUT' : 'POST',
         headers: {
             'Accept': 'application/json',
@@ -514,7 +515,7 @@ export const deleteRatingWithinPage = async (e: Event, ratingID: number): Promis
     submitButton.disabled = true;
     submitButton.textContent = "Deleting...";
 
-    const response = await fetchWithinPage(`/api/ratings/${ratingID}`, {
+    const response = await fetchWithinPage(`${apiBaseUrl}/ratings/${ratingID}`, {
         method: 'DELETE',
     })
 

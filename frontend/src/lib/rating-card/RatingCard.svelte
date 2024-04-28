@@ -22,7 +22,7 @@
     import PrimaryButton from "$lib/button/PrimaryButton.svelte";
     import {deleteRatingWithinPage} from "$lib/auth/authFetch";
     import {invalidateAll} from "$app/navigation";
-    import {listOfferingsPageSize} from "$lib/constants";
+    import {apiBaseUrl, listOfferingsPageSize} from "$lib/constants";
 
     export let rating: Rating;
     const onLike = async () => {
@@ -32,7 +32,7 @@
         }
 
         if (rating.liked_by_viewer) {
-            const response = await fetchWithinPage(`/api/ratings/${rating.id}/like`, {
+            const response = await fetchWithinPage(`${apiBaseUrl}/ratings/${rating.id}/like`, {
                 method: 'DELETE',
             });
 
@@ -41,7 +41,7 @@
                 rating.liked_by_viewer = false;
             }
         } else {
-            const response = await fetchWithinPage(`/api/ratings/${rating.id}/like`, {
+            const response = await fetchWithinPage(`${apiBaseUrl}/ratings/${rating.id}/like`, {
                 method: 'POST',
             });
 
@@ -59,7 +59,7 @@
         }
 
         if (rating.disliked_by_viewer) {
-            const response = await fetchWithinPage(`/api/ratings/${rating.id}/dislike`, {
+            const response = await fetchWithinPage(`${apiBaseUrl}/ratings/${rating.id}/dislike`, {
                 method: 'DELETE',
             });
 
@@ -68,7 +68,7 @@
                 rating.disliked_by_viewer = false;
             }
         } else {
-            const response = await fetchWithinPage(`/api/ratings/${rating.id}/dislike`, {
+            const response = await fetchWithinPage(`${apiBaseUrl}/ratings/${rating.id}/dislike`, {
                 method: 'POST',
             });
 
@@ -107,7 +107,7 @@
 
     const fetchCourseOfferings = async () => {
         const courseOfferingsResponse = await fetchWithinPage(
-            `/api/offerings?course_id=${rating.offering.course.id}&page_size=${listOfferingsPageSize}`
+            `${apiBaseUrl}/offerings?course_id=${rating.offering.course.id}&page_size=${listOfferingsPageSize}`
         );
         const courseOfferingsData: { items: Offering[], metadata: Metadata } = await courseOfferingsResponse.json();
         const courseOfferings = courseOfferingsData.items;

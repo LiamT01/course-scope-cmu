@@ -1,5 +1,6 @@
 import type {RequestHandler} from './$types';
 import {isTokenValid} from "$lib/auth/stores";
+import {apiBaseUrl} from "$lib/constants";
 
 export const POST: RequestHandler = async ({fetch, cookies}) => {
     const token = cookies.get('token') ?? null;
@@ -9,7 +10,7 @@ export const POST: RequestHandler = async ({fetch, cookies}) => {
     cookies.delete('expiry', {path: '/'});
 
     if (isTokenValid(expiry)) {
-        await fetch('/api/tokens/auth/me', {
+        await fetch(`${apiBaseUrl}/tokens/auth/me`, {
             method: 'DELETE',
             headers: {
                 'Authorization': `Bearer ${token}`,

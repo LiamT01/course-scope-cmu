@@ -5,6 +5,7 @@
     import round from "$lib/util/round";
     import {onMount} from "svelte";
     import {fetchWithinPage} from "$lib/auth/fetchClient";
+    import {apiBaseUrl} from "$lib/constants";
 
     export let course: Course;
 
@@ -14,7 +15,7 @@
     })
 
     async function fetchStats() {
-        const statsResponse = await fetchWithinPage(`/api/ratings/stats?course_id=${course.id}`);
+        const statsResponse = await fetchWithinPage(`${apiBaseUrl}/ratings/stats?course_id=${course.id}`);
         return await statsResponse.json();
     }
 </script>

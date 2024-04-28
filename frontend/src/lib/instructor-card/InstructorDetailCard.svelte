@@ -5,7 +5,7 @@
     import {onMount} from "svelte";
     import CourseOfferingTable from "$lib/course/CourseOfferingTable.svelte";
     import {fetchWithinPage} from "$lib/auth/fetchClient";
-    import {listOfferingsPageSize} from "$lib/constants";
+    import {apiBaseUrl, listOfferingsPageSize} from "$lib/constants";
 
     export let instructor: Instructor;
 
@@ -16,7 +16,7 @@
     });
 
     async function fetchStats() {
-        const statsResponse = await fetchWithinPage(`/api/ratings/stats?instructor_ids=${instructor.id}`);
+        const statsResponse = await fetchWithinPage(`${apiBaseUrl}/ratings/stats?instructor_ids=${instructor.id}`);
         return await statsResponse.json();
     }
 
@@ -27,7 +27,7 @@
     });
 
     async function fetchInstructorOfferings() {
-        const instructorOfferingsResponse = await fetchWithinPage(`/api/offerings?instructor_ids=${instructor.id}&page_size=${listOfferingsPageSize}`);
+        const instructorOfferingsResponse = await fetchWithinPage(`${apiBaseUrl}/offerings?instructor_ids=${instructor.id}&page_size=${listOfferingsPageSize}`);
         const instructorOfferingsData = await instructorOfferingsResponse.json() as {
             items: Offering[],
             metadata: Metadata

@@ -1,4 +1,5 @@
 import type {RequestHandler} from './$types';
+import {apiBaseUrl} from "$lib/constants";
 
 interface TokenResponse {
     token: string;
@@ -15,7 +16,7 @@ export const POST: RequestHandler = async ({request, fetch, cookies}) => {
         requestBody[key] = value;
     }
 
-    const response = await fetch('/api/tokens/auth', {
+    const response = await fetch(`${apiBaseUrl}/tokens/auth`, {
         method: 'POST',
         headers: {
             'Accept': 'application/json',

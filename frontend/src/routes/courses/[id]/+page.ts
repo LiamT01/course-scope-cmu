@@ -1,7 +1,7 @@
 import makeQueryParams from "$lib/util/makeQueryParams";
 import type {Course, Metadata, Offering} from "$lib/types";
 import {fetchWithinLoad} from "$lib/auth/fetchClient";
-import {listOfferingsPageSize} from "$lib/constants";
+import {apiBaseUrl, listOfferingsPageSize} from "$lib/constants";
 
 export const load = async ({fetch, params, url, data}) => {
     const courseID = parseInt(params.id);
@@ -19,7 +19,7 @@ export const load = async ({fetch, params, url, data}) => {
 
     const courseResponse = await fetchWithinLoad(
         fetch,
-        `/api/courses/${courseID}`,
+        `${apiBaseUrl}/courses/${courseID}`,
         {
             token: data.token,
             expiry: data.expiry,
@@ -29,7 +29,7 @@ export const load = async ({fetch, params, url, data}) => {
 
     const courseOfferingsResponse = await fetchWithinLoad(
         fetch,
-        `/api/offerings?course_id=${courseID}&page_size=${listOfferingsPageSize}`,
+        `${apiBaseUrl}/offerings?course_id=${courseID}&page_size=${listOfferingsPageSize}`,
         {
             token: data.token,
             expiry: data.expiry,
@@ -51,7 +51,7 @@ export const load = async ({fetch, params, url, data}) => {
 
     const ratingsResponse = await fetchWithinLoad(
         fetch,
-        `/api/ratings?${allRatingsQuery}`,
+        `${apiBaseUrl}/ratings?${allRatingsQuery}`,
         {
             token: data.token,
             expiry: data.expiry,
@@ -70,7 +70,7 @@ export const load = async ({fetch, params, url, data}) => {
     });
     const statsResponse = await fetchWithinLoad(
         fetch,
-        `/api/ratings/stats?${statsAllQuery}`,
+        `${apiBaseUrl}/ratings/stats?${statsAllQuery}`,
         {
             token: data.token,
             expiry: data.expiry,

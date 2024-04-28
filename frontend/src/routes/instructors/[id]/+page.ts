@@ -1,12 +1,13 @@
 import {error} from "@sveltejs/kit";
 import {fetchWithinLoad} from "$lib/auth/fetchClient";
+import {apiBaseUrl} from "$lib/constants";
 
 export const load = async ({fetch, params, data}) => {
     const instructorID = parseInt(params.id);
 
     const instructorResponse = await fetchWithinLoad(
         fetch,
-        `/api/instructors/${instructorID}`,
+        `${apiBaseUrl}/instructors/${instructorID}`,
         {
             token: data.token,
             expiry: data.expiry,

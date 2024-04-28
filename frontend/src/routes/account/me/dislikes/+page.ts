@@ -1,5 +1,6 @@
 import {fetchWithinLoad} from "$lib/auth/fetchClient";
 import type {Metadata, Rating} from "$lib/types";
+import {apiBaseUrl} from "$lib/constants";
 
 export const load = async ({fetch, url, data}) => {
     if (!data.token || !data.expiry) {
@@ -17,7 +18,7 @@ export const load = async ({fetch, url, data}) => {
     const pageSize: number = parseInt(url.searchParams.get('page_size') ?? '10');
     const ratingsResponse = await fetchWithinLoad(
         fetch,
-        `/api/ratings/my-dislikes?page=${page}&page_size=${pageSize}&sort=-updated_at`,
+        `${apiBaseUrl}/ratings/my-dislikes?page=${page}&page_size=${pageSize}&sort=-updated_at`,
         {
             token: data.token,
             expiry: data.expiry,
