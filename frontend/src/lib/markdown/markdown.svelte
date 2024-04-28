@@ -1,6 +1,6 @@
 <script lang="ts">
-    import SvelteMarkdown from 'svelte-markdown';
     import {twMerge} from 'tailwind-merge';
+    import {Markdown} from "svelte-exmarkdown";
 
     export let text: string;
 </script>
@@ -11,7 +11,5 @@
 		$$props.class,
 	)}
 >
-    {#key text}
-        <SvelteMarkdown source={text}/>
-    {/key}
+    <Markdown md={text}/>
 </div>
