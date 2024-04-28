@@ -9,6 +9,11 @@ db/migrations/up:
 	@echo 'Running up migrations...'
 	migrate -path ./migrations -database ${DB_DSN} up
 
+.PHONY: remote-db/migrations/up
+remote-db/migrations/up:
+	@echo 'Running up migrations...'
+	migrate -path ./migrations -database ${REMOTE_DB_DSN} up
+
 .PHONY: audit
 audit:
 	@echo 'Tidying and verifying module dependencies...'
