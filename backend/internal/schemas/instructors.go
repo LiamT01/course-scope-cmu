@@ -8,7 +8,7 @@ import (
 	tbl "github.com/liamt01/course-scope-cmu/backend/.gen/course_scope/public/table"
 )
 
-var validInstructorNamePattern = regexp2.MustCompile(`^[A-Za-z-']+,\s[A-Za-z-']+$`, 0)
+var validInstructorNamePattern = regexp2.MustCompile(`^[\p{L} \p{M}-'.]+,\s[\p{L} \p{M}-'.]+$`, 0)
 
 type InstructorIn struct {
 	Name string `json:"name"`
