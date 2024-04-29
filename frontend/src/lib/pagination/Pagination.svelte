@@ -82,7 +82,8 @@
         </li>
         {#each pages as {name, active}}
             <li>
-                <PaginationItem on:click={() => jump(name)} {large} {active} {activeClass} {normalClass} on:blur on:change on:focus
+                <PaginationItem on:click={() => jump(name)} {large} {active} {activeClass} {normalClass} on:blur
+                                on:change on:focus
                                 on:keydown on:keypress on:keyup on:mouseenter on:mouseleave on:mouseover>
                     {name !== -1 ? name : '...'}
                 </PaginationItem>

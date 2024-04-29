@@ -1,6 +1,6 @@
 import makeQueryParams from "$lib/util/makeQueryParams";
 import type {Course, Metadata, Offering} from "$lib/types";
-import {fetchWithinLoad} from "$lib/auth/fetchClient";
+import {fetchWithinLoad} from "$lib/auth/fetchWrappers";
 import {apiBaseUrl, listOfferingsPageSize} from "$lib/constants";
 
 export const load = async ({fetch, params, url, data}) => {

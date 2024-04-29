@@ -142,7 +142,7 @@ func main() {
 	e.PUT("/users/activated/me", h.ActivateUser)
 	e.PUT("/users/password/me", h.UpdateUserPassword)
 	e.PUT("/users/username/me", h.RequireActivatedUser(h.UpdateUsername))
-	e.DELETE("/users/:id", h.RequireAuth(h.DeleteUser))
+	e.DELETE("/users/me", h.RequireAuth(h.DeleteUser))
 
 	e.POST("/tokens/auth", h.CreateAuthToken)
 	e.POST("/tokens/activation", h.RequireAuth(h.SendActToken))

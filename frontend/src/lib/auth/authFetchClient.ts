@@ -1,7 +1,6 @@
-import {fetchWithinPage} from "$lib/auth/fetchClient";
+import {fetchWithinPage} from "$lib/auth/fetchWrappers";
 import {openLogInModal} from "$lib/modal/stores";
 import {goto, invalidateAll} from "$app/navigation";
-import {expiryStore, tokenStore, userStore} from "$lib/auth/stores";
 import {get} from "svelte/store";
 import {addErrorToast, addSuccessToast} from "$lib/toast/stores";
 import {page} from "$app/stores";
@@ -10,7 +9,7 @@ import {apiBaseUrl} from "$lib/constants";
 
 const andrewIDPattern = /^(?=.{1,20}$)[a-z]+[0-9]*$/;
 const usernamePattern = /^[\w.@+-]{1,30}$/;
-const passwordPattern = /((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W]).{8,64})/;
+const passwordPattern = /((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{8,64})/;
 
 
 const convertFormToJSON = (form: HTMLFormElement): { [key: string]: any } => {
@@ -60,6 +59,8 @@ export const submitLoginFormWithinPage = async (e: Event) => {
 
     const response = await fetchWithinPage('/account/login', {
         method: 'POST',
+        token: null,
+        expiry: null,
         body: formData,
     })
 
@@ -78,13 +79,11 @@ export const submitLoginFormWithinPage = async (e: Event) => {
     await invalidateAll();
 }
 
-export const logOutWithinPage = async () => {
-    if (!get(userStore)) {
-        return
-    }
-
+export const logOutWithinPage = async (token: string | null, expiry: string | null) => {
     await fetchWithinPage('/account/logout', {
         method: 'POST',
+        token,
+        expiry,
     })
 
     await invalidateAll();
@@ -141,6 +140,8 @@ export const submitSignUpFormWithinPage = async (e: Event): Promise<FormSubmitRe
             'Accept': 'application/json',
             'Content-Type': 'application/json',
         },
+        token: null,
+        expiry: null,
         body: JSON.stringify(requestBody),
     })
 
@@ -156,7 +157,7 @@ export const submitSignUpFormWithinPage = async (e: Event): Promise<FormSubmitRe
     return {success: response.ok, errorFields: []};
 }
 
-export const submitPasswordResetRequestLoggedInWithinPage = async (e: Event): Promise<boolean> => {
+export const submitPasswordResetRequestLoggedInWithinPage = async (e: Event, token: string | null, expiry: string | null): Promise<boolean> => {
     e.preventDefault();
     const form = e.target as HTMLFormElement;
 
@@ -173,6 +174,8 @@ export const submitPasswordResetRequestLoggedInWithinPage = async (e: Event): Pr
             'Accept': 'application/json',
             'Content-Type': 'application/json',
         },
+        token,
+        expiry,
     })
 
     submitButton.disabled = false;
@@ -186,7 +189,7 @@ export const submitPasswordResetRequestLoggedInWithinPage = async (e: Event): Pr
     return response.ok;
 }
 
-export const submitActivationLinkRequestLoggedInWithinPage = async (e: Event): Promise<boolean> => {
+export const submitActivationLinkRequestLoggedInWithinPage = async (e: Event, token: string | null, expiry: string | null): Promise<boolean> => {
     e.preventDefault();
     const form = e.target as HTMLFormElement;
 
@@ -203,6 +206,8 @@ export const submitActivationLinkRequestLoggedInWithinPage = async (e: Event): P
             'Accept': 'application/json',
             'Content-Type': 'application/json',
         },
+        token,
+        expiry,
     })
 
     submitButton.disabled = false;
@@ -242,6 +247,8 @@ export const submitPasswordResetRequestFormWithinPage = async (e: Event): Promis
             'Accept': 'application/json',
             'Content-Type': 'application/json',
         },
+        token: null,
+        expiry: null,
         body: JSON.stringify(requestBody),
     })
 
@@ -268,11 +275,14 @@ export const activateAccountWithinPage = async (token: string | null): Promise<b
             'Accept': 'application/json',
             'Content-Type': 'application/json',
         },
+        token: null,
+        expiry: null,
         body: JSON.stringify({token}),
     })
 
     if (response.ok) {
         addSuccessToast("Your account has been activated.");
+        await invalidateAll();
         return true;
     }
 
@@ -316,6 +326,8 @@ export const submitPasswordResetFormWithinPage = async (e: Event, token: string 
             'Accept': 'application/json',
             'Content-Type': 'application/json',
         },
+        token: null,
+        expiry: null,
         body: JSON.stringify({...requestBody, token}),
     })
 
@@ -330,7 +342,7 @@ export const submitPasswordResetFormWithinPage = async (e: Event, token: string 
     return {success: response.ok, errorFields: []};
 }
 
-export const submitUsernameChangeFormWithinPage = async (e: Event): Promise<FormSubmitResponse> => {
+export const submitUsernameChangeFormWithinPage = async (e: Event, token: string | null, expiry: string | null): Promise<FormSubmitResponse> => {
     e.preventDefault();
     const form = e.target as HTMLFormElement;
 
@@ -356,6 +368,8 @@ export const submitUsernameChangeFormWithinPage = async (e: Event): Promise<Form
             'Accept': 'application/json',
             'Content-Type': 'application/json',
         },
+        token,
+        expiry,
         body: JSON.stringify(requestBody),
     })
 
@@ -412,7 +426,7 @@ const validateRatingID = (ratingID: number): boolean => {
     return ratingID > 0;
 }
 
-export const submitRatingWithinPage = async (e: Event, rating: RatingIn): Promise<FormSubmitResponse> => {
+export const submitRatingWithinPage = async (e: Event, rating: RatingIn, token: string | null, expiry: string | null): Promise<FormSubmitResponse> => {
     e.preventDefault();
 
     if (rating.rating_id && !validateRatingID(rating.rating_id)) {
@@ -480,6 +494,8 @@ export const submitRatingWithinPage = async (e: Event, rating: RatingIn): Promis
             'Accept': 'application/json',
             'Content-Type': 'application/json',
         },
+        token,
+        expiry,
         body: JSON.stringify(rating),
     })
 
@@ -488,13 +504,14 @@ export const submitRatingWithinPage = async (e: Event, rating: RatingIn): Promis
 
     if (response.ok) {
         addSuccessToast(rating.rating_id ? "Your rating has been updated." : "Your rating has been submitted.");
+        await invalidateAll();
     }
 
     return {success: response.ok, errorFields: []};
 }
 
 
-export const deleteRatingWithinPage = async (e: Event, ratingID: number): Promise<boolean> => {
+export const deleteRatingWithinPage = async (e: Event, ratingID: number, token: string | null, expiry: string | null): Promise<boolean> => {
     e.preventDefault();
 
     const form = e.target as HTMLFormElement;
@@ -513,6 +530,8 @@ export const deleteRatingWithinPage = async (e: Event, ratingID: number): Promis
 
     const response = await fetchWithinPage(`${apiBaseUrl}/ratings/${ratingID}`, {
         method: 'DELETE',
+        token,
+        expiry,
     })
 
     submitButton.disabled = false;

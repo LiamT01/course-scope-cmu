@@ -1,6 +1,6 @@
 <script>
     import {openLogInModal} from "$lib/modal/stores";
-    import {submitLoginFormWithinPage} from "$lib/auth/authFetch.ts";
+    import {submitLoginFormWithinPage} from "$lib/auth/authFetchClient";
     import {Input, Label} from "flowbite-svelte";
     import OutlineButton from "$lib/button/OutlineButton.svelte";
     import PrimaryButton from "$lib/button/PrimaryButton.svelte";
@@ -32,7 +32,8 @@
                 <Input name="password" placeholder="••••••••" required type="password"/>
             </Label>
             <div class="flex items-start">
-                <a class="text-sm text-gray-600 hover:text-gray-900 dark:text-gray-500 dark:hover:text-gray-700" href="javascript:;" on:click={onForgotPassword}>
+                <a class="text-sm text-gray-600 hover:text-gray-900 dark:text-gray-500 dark:hover:text-gray-700"
+                   href="javascript:" on:click={onForgotPassword}>
                     Forgot password?
                 </a>
             </div>

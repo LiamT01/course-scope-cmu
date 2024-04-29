@@ -1,5 +1,5 @@
 import type {Cookies} from "@sveltejs/kit";
-import {isTokenValid} from "$lib/auth/stores";
+import {isTokenValid} from "$lib/auth/tokenValidity";
 
 // Returns valid tokens, or null if invalid
 export const getTokenFromCookies = async ({cookies}: { cookies: Cookies }) => {

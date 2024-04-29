@@ -1,10 +1,9 @@
 <script lang="ts">
     import RatingStats from "$lib/rating/RatingStats.svelte";
-    import type {RatingStats} from "$lib/types";
+    import type {RatingStatsT} from "$lib/types";
     import round, {roundFixed} from "$lib/util/round";
     import {twMerge} from "tailwind-merge";
     import PrimaryButton from "$lib/button/PrimaryButton.svelte";
-    import OutlineButton from "$lib/button/OutlineButton.svelte";
     import Star from "$lib/rating/Star.svelte";
     import RatingIcons from "$lib/rating/RatingIcons.svelte";
     import Heart from "$lib/rating/Heart.svelte";
@@ -12,7 +11,7 @@
     import Clock from "$lib/rating/Clock.svelte";
     import Laugh from "$lib/rating/Laugh.svelte";
 
-    export let stats: RatingStats;
+    export let stats: RatingStatsT;
     export let onContributeRating: () => void = () => {
     };
 
@@ -85,22 +84,24 @@
                         <RatingIcons icon={Clock} rating={stats.avg_workload}/>
                         <span>{roundFixed(stats.avg_workload, 1)}</span>
                     </span>
-                    <RatingStats key="course-workload-{key}" rubricName="workload" stats={mapToPercentage(stats.workload)}/>
+                    <RatingStats key="course-workload-{key}" rubricName="workload"
+                                 stats={mapToPercentage(stats.workload)}/>
 
                     <span>Grading:</span>
                     <span class="flex gap-x-4">
                         <RatingIcons icon={Laugh} rating={stats.avg_grading}/>
                         <span>{roundFixed(stats.avg_grading, 1)}</span>
                     </span>
-                    <RatingStats key="course-grading-{key}" rubricName="grading" stats={mapToPercentage(stats.grading)}/>
+                    <RatingStats key="course-grading-{key}" rubricName="grading"
+                                 stats={mapToPercentage(stats.grading)}/>
                 </div>
             </div>
         </div>
 
         <div class="flex flex-col gap-y-4">
-<!--            <OutlineButton size="sm">-->
-<!--                Taking / Took it (0)-->
-<!--            </OutlineButton>-->
+            <!--            <OutlineButton size="sm">-->
+            <!--                Taking / Took it (0)-->
+            <!--            </OutlineButton>-->
             <PrimaryButton on:click={onContributeRating} size="sm">
                 Rate it!
             </PrimaryButton>

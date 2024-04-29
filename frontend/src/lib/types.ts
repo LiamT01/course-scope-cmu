@@ -13,22 +13,16 @@ export interface Course {
     department: string;
     units: number;
     description: string | null;
-    // numRatings: number;
-    // ratingRubric: RatingRubric;
-    // ratingStats: RatingStats;
 }
 
 export interface Instructor {
     id: number;
     name: string;
-    // teaches: CourseOffering[];
-    // ratingRubric: RatingRubric;
 }
 
 
 export interface Offering {
     id: number;
-    // course_id: number;
     course: Course;
     semester: "Fall" | "Summer 1" | "Summer 2" | "Spring" | "Winter";
     year: number;
@@ -40,23 +34,7 @@ export interface CourseOffering extends Offering {
     instructors: Instructor[];
 }
 
-export interface InstructorOffering {
-    offering: Offering;
-    course: Course;
-}
-
-// export interface RatingRubric {
-//     overall: number;
-//     teaching: number;
-//     materials: number;
-//     value: number;
-//     difficulty: number;
-//     workload: number;
-//     grading: number;
-// }
-
-// Rating category => number of instances
-export interface RatingStats {
+export interface RatingStatsT {
     rating_count: number;
     overall: { [key: number]: number };
     teaching: { [key: number]: number };
@@ -90,14 +68,9 @@ export interface RatingIn {
 export interface Rating {
     id: number;
     user: User;
-    // user_id: number;
-    // author: User;
-    // courseOffering: CourseOffering;
     offering: Offering;
-    // offering_id: number;
     created_at: Date;
     updated_at: Date;
-    // rubric: RatingRubric;
     overall: number;
     teaching: number;
     materials: number;
@@ -111,17 +84,6 @@ export interface Rating {
     disliked_by_viewer: boolean;
 }
 
-// export interface RatingOutput extends Rating {
-//     username: string;
-//     avatar: string;
-// }
-
-// export interface Teaches {
-//     id: number;
-//     instructorID: number;
-//     offeringID: number;
-// }
-
 export interface Metadata {
     current_page: number;
     first_page: number;
@@ -131,9 +93,9 @@ export interface Metadata {
     totalRecords: number;
 }
 
-export type Fetch = (input: RequestInfo | URL, init?: RequestInit | undefined) => Promise<Response>
-
 export interface UserStats {
     likes_received: number;
     courses_rated: number;
 }
+
+export type Fetch = (input: RequestInfo | URL, init?: RequestInit | undefined) => Promise<Response>

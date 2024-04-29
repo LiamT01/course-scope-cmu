@@ -1,14 +1,14 @@
 <script lang="ts">
-    import type {Instructor, RatingStats} from "$lib/types";
+    import type {Instructor, RatingStatsT} from "$lib/types";
     import RatingIcons from "$lib/rating/RatingIcons.svelte";
     import round, {roundFixed} from "$lib/util/round";
     import {onMount} from "svelte";
-    import {fetchWithinPage} from "$lib/auth/fetchClient";
+    import {fetchWithinPage} from "$lib/auth/fetchWrappers";
     import {apiBaseUrl} from "$lib/constants";
 
     export let instructor: Instructor;
 
-    let stats: RatingStats | null;
+    let stats: RatingStatsT | null;
 
     onMount(async () => {
         stats = await fetchStats();

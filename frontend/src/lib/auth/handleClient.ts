@@ -1,13 +1,12 @@
 import {browser} from "$app/environment";
 import {addErrorToast} from "$lib/toast/stores";
 import displayErrors from "$lib/util/displayErrors";
-import {expiryStore, isTokenExpired, tokenStore, userStore} from "$lib/auth/stores";
+import {isTokenExpired} from "$lib/auth/tokenValidity";
 import {invalidateAll} from "$app/navigation";
 
 export async function handleTokenExpiryClient(
     fetch: (input: RequestInfo | URL, init?: RequestInit | undefined) => Promise<Response>,
     expiry: string | null | undefined,
-    withinPage: boolean
 ): Promise<boolean> {
     if (!browser) {
         return false;
@@ -23,7 +22,7 @@ export async function handleTokenExpiryClient(
 
             if (!response.ok) {
                 const data = await response.json();
-                displayErrors(data.message);
+                displayErrors(data.detail ?? data.message);
             }
 
             await invalidateAll();

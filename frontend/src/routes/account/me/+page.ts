@@ -1,7 +1,5 @@
-import {fetchWithinLoad} from "$lib/auth/fetchClient";
+import {fetchWithinLoad} from "$lib/auth/fetchWrappers";
 import type {Metadata, Rating, UserStats} from "$lib/types";
-import {userStore} from "$lib/auth/stores";
-import {get} from "svelte/store";
 import {apiBaseUrl} from "$lib/constants";
 
 export const load = async ({fetch, url, data}) => {
@@ -26,7 +24,7 @@ export const load = async ({fetch, url, data}) => {
             expiry: data.expiry,
         }
     );
-    const ratingsData: {items: Rating[], metadata: Metadata} = await ratingsResponse.json()
+    const ratingsData: { items: Rating[], metadata: Metadata } = await ratingsResponse.json()
 
     const userStatsResponse = await fetchWithinLoad(
         fetch,

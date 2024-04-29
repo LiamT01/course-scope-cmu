@@ -7,7 +7,6 @@
     export let semester: string = "all";
     export let year: string = "all";
     export let instructors: string[] = [];
-    export let overall: string = "all";
 
     export let semesterOptions: { value: string, name: string }[];
     export let yearOptions: { value: string, name: string }[];
@@ -22,14 +21,6 @@
         {value: "-overall", name: "Highest rated"},
         {value: "overall", name: "Lowest rated"},
     ];
-    const ratingOptions = [
-        {value: "all", name: "All"},
-        {value: "5", name: '5-star'},
-        {value: "4", name: '4-star'},
-        {value: "3", name: '3-star'},
-        {value: "2", name: '2-star'},
-        {value: "1", name: '1-star'},
-    ]
 
 </script>
 
@@ -39,7 +30,8 @@
         <div class="flex-1 space-y-2">
             <span class="md:order-1 text-sm font-medium whitespace-nowrap">Sort by</span>
             <div class="mb-2 md:mb-0 md:order-6 flex flex-wrap gap-x-4 gap-y-2">
-                <Select bind:value={sort} class="overflow-hidden text-xs sm:text-sm" items={sortByOptions} placeholder="" size="sm"/>
+                <Select bind:value={sort} class="overflow-hidden text-xs sm:text-sm" items={sortByOptions}
+                        placeholder="" size="sm"/>
                 <!--{#each sortByOptions as {value, name}}-->
                 <!--    <Radio bind:group={sort} {value}>{name}</Radio>-->
                 <!--{/each}-->
@@ -48,13 +40,15 @@
 
         <div class="space-y-2">
             <span class="md:order-2 text-sm font-medium whitespace-nowrap">Semester</span>
-            <Select bind:value={semester} class="mb-2 md:mb-0 md:order-7 overflow-hidden text-xs sm:text-sm" items={semesterOptions}
+            <Select bind:value={semester} class="mb-2 md:mb-0 md:order-7 overflow-hidden text-xs sm:text-sm"
+                    items={semesterOptions}
                     placeholder="" size="sm"/>
         </div>
 
         <div class="space-y-2">
             <span class="md:order-3 text-sm font-medium whitespace-nowrap">Year</span>
-            <Select bind:value={year} class="mb-2 md:mb-0 md:order-8 overflow-hidden text-xs sm:text-sm" items={yearOptions} placeholder=""
+            <Select bind:value={year} class="mb-2 md:mb-0 md:order-8 overflow-hidden text-xs sm:text-sm"
+                    items={yearOptions} placeholder=""
                     size="sm"/>
         </div>
     </div>

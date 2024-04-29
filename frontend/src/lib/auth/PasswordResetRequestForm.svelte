@@ -2,7 +2,7 @@
     import {Input, Label} from "flowbite-svelte";
     import PrimaryButton from "$lib/button/PrimaryButton.svelte";
     import {twMerge} from "tailwind-merge";
-    import {type FormSubmitResponse, submitPasswordResetRequestFormWithinPage} from "$lib/auth/authFetch";
+    import {type FormSubmitResponse, submitPasswordResetRequestFormWithinPage} from "$lib/auth/authFetchClient";
     import {goto} from "$app/navigation";
 
     export let nextLink: string | null = '';

@@ -2,15 +2,9 @@
     import type {Course, CourseOffering} from "$lib/types";
     import {BookOpenOutline, BuildingOutline} from "flowbite-svelte-icons";
     import CourseOfferingTable from "$lib/course/CourseOfferingTable.svelte";
-    import OutlineButton from "$lib/button/OutlineButton.svelte";
 
     export let course: Course;
     export let courseOfferings: CourseOffering[];
-    let showMore: boolean = false;
-
-    const toggleShowMore = () => {
-        showMore = !showMore;
-    }
 </script>
 
 <div class="flex flex-col gap-y-4" id="course-{course.id}">
@@ -31,15 +25,6 @@
             <span class="mr-2">{course.number}</span>
             <span>{course.name}</span>
         </p>
-
-<!--        <div class="leading-relaxed text-sm whitespace-pre-wrap {showMore ? '' : 'line-clamp-6'}">-->
-<!--            {course.description}-->
-<!--        </div>-->
-<!--        {#if showMore}-->
-<!--            <OutlineButton size="sm" on:click={toggleShowMore}>Show less</OutlineButton>-->
-<!--        {:else}-->
-<!--            <OutlineButton size="sm" on:click={toggleShowMore}>Show more</OutlineButton>-->
-<!--        {/if}-->
     </div>
 
     <div class="flex flex-col gap-y-2 border-y">

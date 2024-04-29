@@ -1,15 +1,15 @@
 <script lang="ts">
-    import type {Course, RatingStats} from "$lib/types";
+    import type {Course, RatingStatsT} from "$lib/types";
     import {BookOpenOutline, BuildingOutline,} from "flowbite-svelte-icons";
     import RatingIcons from "$lib/rating/RatingIcons.svelte";
     import round from "$lib/util/round";
     import {onMount} from "svelte";
-    import {fetchWithinPage} from "$lib/auth/fetchClient";
+    import {fetchWithinPage} from "$lib/auth/fetchWrappers";
     import {apiBaseUrl} from "$lib/constants";
 
     export let course: Course;
 
-    let stats: RatingStats | null;
+    let stats: RatingStatsT | null;
     onMount(async () => {
         stats = await fetchStats();
     })
@@ -42,7 +42,7 @@
         <RatingIcons size={20} text="sm" rating={round(stats.avg_overall, 1)}/>
     {/if}
 
-<!--    <div class="leading-relaxed text-sm whitespace-pre-wrap line-clamp-3">-->
-<!--        {course.description}-->
-<!--    </div>-->
+    <!--    <div class="leading-relaxed text-sm whitespace-pre-wrap line-clamp-3">-->
+    <!--        {course.description}-->
+    <!--    </div>-->
 </div>

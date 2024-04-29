@@ -1,5 +1,5 @@
 import {error} from "@sveltejs/kit";
-import {fetchWithinLoad} from "$lib/auth/fetchClient";
+import {fetchWithinLoad} from "$lib/auth/fetchWrappers";
 import {apiBaseUrl} from "$lib/constants";
 
 export const load = async ({fetch, params, data}) => {

@@ -1,7 +1,6 @@
 <script lang="ts">
     import {fade} from 'svelte/transition'
     import {onMount} from "svelte";
-    import {clickOutside} from "$lib/actions/clickOutside";
     import focusTrap from "$lib/actions/focusTrap";
     import {twMerge} from "tailwind-merge";
     import {CloseOutline} from "flowbite-svelte-icons";
@@ -47,17 +46,18 @@
     }
 </script>
 
-<div transition:fade={{duration: 100}} class="w-screen h-screen fixed inset-0 z-50 bg-gray-900 bg-opacity-50 dark:bg-opacity-80"/>
+<div class="w-screen h-screen fixed inset-0 z-50 bg-gray-900 bg-opacity-50 dark:bg-opacity-80"
+     transition:fade={{duration: 100}}/>
 <!--    <div use:prepareFocus use:focusTrap on:wheel|preventDefault|nonpassive on:touchmove|preventDefault|nonpassive-->
-    <div use:prepareFocus use:focusTrap
-         class="fixed justify-center items-center top-0 start-0 end-0 h-modal md:inset-0 md:h-full z-50 w-full p-4 flex"
-         tabindex="-1" aria-modal="true" role="dialog">
+<div aria-modal="true" class="fixed justify-center items-center top-0 start-0 end-0 h-modal md:inset-0 md:h-full z-50 w-full p-4 flex"
+     role="dialog"
+     tabindex="-1" use:focusTrap use:prepareFocus>
     <!--        <div use:clickOutside={{callback: hide, excludedElement: null}}-->
-        <div
-             class={twMerge("border rounded-lg bg-white shadow p-4 relative max-w-md w-full max-h-full", $$props.class)}>
-            <GhostButton size="xs" class="w-8 h-8 absolute top-4 end-4 cursor-pointer" on:click={hide}>
-                <CloseOutline class="w-3 h-3" />
-            </GhostButton>
-            <slot/>
+    <div
+            class={twMerge("border rounded-lg bg-white shadow p-4 relative max-w-md w-full max-h-full", $$props.class)}>
+        <GhostButton class="w-8 h-8 absolute top-4 end-4 cursor-pointer" on:click={hide} size="xs">
+            <CloseOutline class="w-3 h-3"/>
+        </GhostButton>
+        <slot/>
     </div>
 </div>

@@ -179,20 +179,8 @@ func (h *Handler) UpdateUser(c echo.Context) error {
 func (h *Handler) DeleteUser(c echo.Context) error {
 	user := h.contextGetUser(c)
 
-	input := new(schemas.UserIDIn)
-	if err := c.Bind(input); err != nil {
-		return err
-	}
-	if err := input.Validate(); err != nil {
-		return err
-	}
-
-	if user.ID != input.ID {
-		return ErrorNotPermitted
-	}
-
 	stmt := tbl.Users.DELETE().
-		WHERE(tbl.Users.ID.EQ(pg.Int64(input.ID))).
+		WHERE(tbl.Users.ID.EQ(pg.Int64(user.ID))).
 		RETURNING(tbl.Users.ID.AS("id"))
 
 	var dst struct {
