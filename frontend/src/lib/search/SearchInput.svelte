@@ -30,7 +30,7 @@
             <ChevronDownSolid class="w-2 h-2 ms-1.5"/>
         </Button>
         <div use:clickOutside={{callback: handleClickOutside, excludedElement: document.getElementById(`category-menu-${key}`)}}>
-            <Dropdown class="border rounded-lg" bind:open={dropdownOpen} placement="bottom"
+            <Dropdown bind:open={dropdownOpen} class="border rounded-lg" placement="bottom"
                       triggeredBy="#category-menu-{key}">
                 <div transition:fade={{duration: 100}}>
                     {#each searchItems as {label}, index}

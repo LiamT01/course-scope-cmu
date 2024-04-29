@@ -1,13 +1,12 @@
 <script lang="ts">
-    import {userStore} from "$lib/auth/stores";
     import Pagination from "$lib/pagination/Pagination.svelte";
     import RatingCard from "$lib/rating-card/RatingCard.svelte";
-    import type {Metadata, Rating} from "$lib/types";
+    import type {Metadata, Rating, User} from "$lib/types";
     import {goto} from "$app/navigation";
     import OutlineButton from "$lib/button/OutlineButton.svelte";
     import Title from "$lib/section/Title.svelte";
 
-    export let data: { metadata: Metadata, ratings: Rating[], token: string, expiry: string };
+    export let data: { metadata: Metadata, ratings: Rating[], token: string, expiry: string, user : User | null };
 
     const previous = () => {
         if (data.metadata.current_page > data.metadata.first_page) {
@@ -29,13 +28,13 @@
     };
 </script>
 
-{#if $userStore}
+{#if data.user}
     <div class="flex flex-col gap-y-4">
         {#if data.ratings.length > 0}
             <Title>Liked ratings ({data.metadata.total})</Title>
 
             {#each data.ratings as rating (rating.id)}
-                <RatingCard {rating} showCourseDetail/>
+                <RatingCard token={data.token} expiry={data.expiry} user={data.user} {rating} showCourseDetail/>
             {/each}
 
             <div class="mx-auto">

@@ -1,5 +1,5 @@
 import makeQueryParams from "$lib/util/makeQueryParams";
-import {fetchWithinLoad} from "$lib/auth/fetchClient";
+import {fetchWithinLoad} from "$lib/auth/fetchWrappers";
 import type {Course, Metadata} from "$lib/types";
 import {apiBaseUrl} from "$lib/constants";
 

@@ -1,9 +1,8 @@
 import {handleTokenExpiryClient} from "$lib/auth/handleClient";
 import type {Fetch} from "$lib/types";
-import {isTokenValid} from "$lib/auth/stores";
+import {isTokenValid} from "$lib/auth/tokenValidity";
 import displayErrors from "$lib/util/displayErrors";
-import {tokenStore, expiryStore} from "$lib/auth/stores";
-import {get} from "svelte/store";
+import {browser} from "$app/environment";
 
 interface Init extends RequestInit {
     // Override headers
@@ -30,7 +29,7 @@ const fetchBase = async (
     try {
         const response = await fetch(input, init);
 
-        if (!response.ok) {
+        if (!response.ok && browser) {
             const data = await response.json();
             displayErrors(data.detail ?? data.message);
             return new Response(JSON.stringify(data), {status: response.status});
@@ -46,27 +45,21 @@ const fetchBase = async (
 // (1) If token is expired, logs user out and prompts user to log in again.
 // (2) Includes valid token in headers.
 // (3) Displays any errors for api call.
-export const fetchWithinPage = async (
-    input: RequestInfo | URL,
-    init?: Init,
-): Promise<Response> => {
-    const initWithToken: InitWithToken = {
-        token: get(tokenStore),
-        expiry: get(expiryStore),
-        ...init,
-    }
-    await handleTokenExpiryClient(fetch, initWithToken?.expiry, true);
-    return await fetchBase(fetch, input, initWithToken);
-}
-
-// (1) If token is expired, logs user out and prompts user to log in again.
-// (2) Includes valid token in headers.
-// (3) Displays any errors for api call.
 export const fetchWithinLoad = async (
     fetch: Fetch,
     input: RequestInfo | URL,
     init?: InitWithToken,
 ): Promise<Response> => {
-    await handleTokenExpiryClient(fetch, init?.expiry, false);
+    await handleTokenExpiryClient(fetch, init?.expiry);
     return await fetchBase(fetch, input, init);
+}
+
+// (1) If token is expired, logs user out and prompts user to log in again.
+// (2) Includes valid token in headers.
+// (3) Displays any errors for api call.
+export const fetchWithinPage = async (
+    input: RequestInfo | URL,
+    init?: InitWithToken,
+): Promise<Response> => {
+    return await fetchWithinLoad(fetch, input, init);
 }

@@ -1,15 +1,15 @@
 <script lang="ts">
-    import type {Instructor, Metadata, Offering, RatingStats} from "$lib/types";
+    import type {Instructor, Metadata, Offering, RatingStatsT} from "$lib/types";
     import round, {roundFixed} from "$lib/util/round";
     import RatingIcons from "$lib/rating/RatingIcons.svelte";
     import {onMount} from "svelte";
     import CourseOfferingTable from "$lib/course/CourseOfferingTable.svelte";
-    import {fetchWithinPage} from "$lib/auth/fetchClient";
+    import {fetchWithinPage} from "$lib/auth/fetchWrappers";
     import {apiBaseUrl, listOfferingsPageSize} from "$lib/constants";
 
     export let instructor: Instructor;
 
-    let stats: RatingStats | null;
+    let stats: RatingStatsT | null;
 
     onMount(async () => {
         stats = await fetchStats();

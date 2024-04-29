@@ -1,7 +1,7 @@
 <script lang="ts">
-    import { twMerge } from 'tailwind-merge';
-    import { fly, slide, blur, fade } from 'svelte/transition';
-    import { clickOutside } from "$lib/actions/clickOutside";
+    import {twMerge} from 'tailwind-merge';
+    import {blur, fade, fly, slide} from 'svelte/transition';
+    import {clickOutside} from "$lib/actions/clickOutside";
 
     export let activateClickOutside: boolean = true;
     export let hidden: boolean = true;
@@ -16,7 +16,7 @@
     export let placement: 'left' | 'right' | 'top' | 'bottom' = 'left';
     export let id: string = 'drawer-example';
     export let divClass: string = 'overflow-y-auto z-50 p-4 bg-white dark:bg-gray-800';
-    export let transitionParams: {x?: number, duration?: number, easing?: (t: number) => number} = {};
+    export let transitionParams: { x?: number, duration?: number, easing?: (t: number) => number } = {};
     export let transitionType: 'fly' | 'slide' | 'blur' | 'fade' = 'fly';
 
     function multiple(node: HTMLElement, params: any) {
@@ -48,14 +48,17 @@
     let backdropDivClass = twMerge('fixed top-0 start-0 z-50 w-full h-full', bgColor, bgOpacity);
 
     function clickOutsideWrapper(node: HTMLElement, callback: () => void) {
-        return activateClickOutside ? clickOutside(node, {callback , excludedElement: null}) : undefined;
+        return activateClickOutside ? clickOutside(node, {callback, excludedElement: null}) : undefined;
     }
 </script>
 
 {#if !hidden}
-        <div transition:fade={{duration: 100}} role="presentation" class={backdropDivClass} on:click={() => !hidden && handleDrawer()} />
+    <div transition:fade={{duration: 100}} role="presentation" class={backdropDivClass}
+         on:click={() => !hidden && handleDrawer()}/>
 
-    <div use:clickOutsideWrapper={handleClickOutside} {id} {...$$restProps} class={twMerge(divClass, width, position, placements[placement], $$props.class)} transition:multiple={transitionParams} tabindex="-1" aria-controls={id} aria-labelledby={id}>
-        <slot {hidden} />
+    <div use:clickOutsideWrapper={handleClickOutside} {id} {...$$restProps}
+         class={twMerge(divClass, width, position, placements[placement], $$props.class)}
+         transition:multiple={transitionParams} tabindex="-1" aria-controls={id} aria-labelledby={id}>
+        <slot {hidden}/>
     </div>
 {/if}

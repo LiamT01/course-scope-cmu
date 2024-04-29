@@ -2,12 +2,7 @@
     import {clickOutside} from '$lib/actions/clickOutside';
     import {fade} from 'svelte/transition';
     import {Dropdown} from 'flowbite-svelte';
-    import {
-        BookOpenOutline,
-        BuildingOutline,
-        DotsHorizontalOutline,
-        UserOutline
-    } from 'flowbite-svelte-icons';
+    import {BookOpenOutline, BuildingOutline, DotsHorizontalOutline, UserOutline} from 'flowbite-svelte-icons';
     import {twMerge} from 'tailwind-merge';
     import type {Course, CourseOffering} from '$lib/types';
     import GhostButton from "$lib/button/GhostButton.svelte";

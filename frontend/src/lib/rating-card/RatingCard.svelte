@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type {Course, CourseOffering, Metadata, Offering, Rating} from '$lib/types';
+    import type {Course, CourseOffering, Metadata, Offering, Rating, User} from '$lib/types';
     import {Avatar} from 'flowbite-svelte';
     import {format, formatDistance, isToday} from 'date-fns';
     import {EditOutline, TrashBinOutline, UserOutline} from 'flowbite-svelte-icons';
@@ -12,21 +12,23 @@
     import MindBlown from "$lib/rating/MindBlown.svelte";
     import Clock from "$lib/rating/Clock.svelte";
     import Laugh from "$lib/rating/Laugh.svelte";
-    import {userStore} from "$lib/auth/stores";
     import {openLogInModal} from "$lib/modal/stores";
-    import {fetchWithinPage} from "$lib/auth/fetchClient";
+    import {fetchWithinPage} from "$lib/auth/fetchWrappers";
     import Modal from "$lib/modal/Modal.svelte";
     import RatingEditForm from "$lib/rating/RatingEditForm.svelte";
     import {onMount} from "svelte";
     import OutlineButton from "$lib/button/OutlineButton.svelte";
     import PrimaryButton from "$lib/button/PrimaryButton.svelte";
-    import {deleteRatingWithinPage} from "$lib/auth/authFetch";
-    import {invalidateAll} from "$app/navigation";
+    import {deleteRatingWithinPage} from "$lib/auth/authFetchClient";
     import {apiBaseUrl, listOfferingsPageSize} from "$lib/constants";
+
+    export let token: string | null;
+    export let expiry: string | null;
+    export let user: User | null;
 
     export let rating: Rating;
     const onLike = async () => {
-        if (!$userStore) {
+        if (!user) {
             $openLogInModal = true;
             return
         }
@@ -34,6 +36,8 @@
         if (rating.liked_by_viewer) {
             const response = await fetchWithinPage(`${apiBaseUrl}/ratings/${rating.id}/like`, {
                 method: 'DELETE',
+                token,
+                expiry,
             });
 
             if (response.ok) {
@@ -43,6 +47,8 @@
         } else {
             const response = await fetchWithinPage(`${apiBaseUrl}/ratings/${rating.id}/like`, {
                 method: 'POST',
+                token,
+                expiry,
             });
 
             if (response.ok) {
@@ -53,7 +59,7 @@
     };
 
     const onDislike = async () => {
-        if (!$userStore) {
+        if (!user) {
             $openLogInModal = true;
             return
         }
@@ -61,6 +67,8 @@
         if (rating.disliked_by_viewer) {
             const response = await fetchWithinPage(`${apiBaseUrl}/ratings/${rating.id}/dislike`, {
                 method: 'DELETE',
+                token,
+                expiry,
             });
 
             if (response.ok) {
@@ -70,6 +78,8 @@
         } else {
             const response = await fetchWithinPage(`${apiBaseUrl}/ratings/${rating.id}/dislike`, {
                 method: 'POST',
+                expiry,
+                token,
             });
 
             if (response.ok) {
@@ -79,16 +89,7 @@
         }
     };
 
-    const onReportAbuse = async () => {
-    };
-
     export let showCourseDetail: boolean = false;
-
-    let readMore: boolean = false;
-
-    const onReadMore = (url: string, ratingID: string) => {
-        readMore = !readMore;
-    };
 
     let course: Course | null = rating.offering.course;
     let courseOffering: CourseOffering | null = rating.offering;
@@ -123,7 +124,7 @@
         ];
     }
 
-    if ($userStore?.id === rating.user.id) {
+    if (user?.id === rating.user.id) {
         onMount(async () => {
             offeringOptions = await fetchCourseOfferings();
         });
@@ -132,7 +133,7 @@
     let openDeleteConfirmationModal: boolean = false;
 
     const onDelete = async (e: Event) => {
-        const ok = await deleteRatingWithinPage(e, rating.id);
+        const ok = await deleteRatingWithinPage(e, rating.id, token, expiry);
         if (ok) {
             openDeleteConfirmationModal = false;
         }
@@ -140,7 +141,6 @@
 
     const onSubmitRatingEditSuccess = async () => {
         openRatingEditModal = false;
-        // await invalidateAll();
     };
 </script>
 
@@ -148,7 +148,7 @@
     <div class="flex flex-col gap-y-2 justify-between items-start">
         <div class="flex flex-col gap-y-2">
             <div class="flex items-center gap-x-4">
-                <Avatar src={$userStore?.id === rating.user.id ? "/authenticated-avatar.png" : "/anonymous-avatar.png"}/>
+                <Avatar src={user?.id === rating.user.id ? "/authenticated-avatar.png" : "/anonymous-avatar.png"}/>
                 <div class="text-sm">
                     <div class="flex items-center gap-x-2 flex-wrap">
                         <p class="font-medium">{rating.user.username}</p>
@@ -236,7 +236,7 @@
                                {onDislike}
                                {onLike}
                 />
-                {#if $userStore?.id === rating.user.id}
+                {#if user?.id === rating.user.id}
                     <GhostButton on:click={() => openRatingEditModal = true} class="h-8 w-8" size="xs">
                         <EditOutline class="h-4 w-4"/>
                     </GhostButton>
@@ -252,11 +252,13 @@
     </div>
 </div>
 
-{#if $userStore?.id === rating.user.id && openRatingEditModal && offeringOptions.length > 0}
+{#if user?.id === rating.user.id && openRatingEditModal && offeringOptions.length > 0}
     <Modal bind:open={openRatingEditModal} class="max-w-full max-h-full overflow-y-auto">
         <div class="space-y-4">
             <h3 class="text-xl font-medium dark:text-white">Update rating</h3>
             <RatingEditForm
+                    {token}
+                    {expiry}
                     {offeringOptions}
                     ratingID={rating.id}
                     offeringID={rating.offering.id}
@@ -274,7 +276,7 @@
     </Modal>
 {/if}
 
-{#if $userStore?.id === rating.user.id && openDeleteConfirmationModal}
+{#if user?.id === rating.user.id && openDeleteConfirmationModal}
     <Modal bind:open={openDeleteConfirmationModal} class="w-96">
         <form class="space-y-8" on:submit={onDelete}>
             <h3 class="text-xl font-medium dark:text-white">Confirm deletion</h3>

@@ -5,9 +5,12 @@
     import Footer from "$lib/footer/Footer.svelte";
     import Toasts from "$lib/toast/Toasts.svelte";
     import LoginModal from "$lib/auth/LoginModal.svelte";
+    import type {User} from "$lib/types";
+
+    export let data : {token: string | null, expiry: string | null, user : User | null};
 </script>
 
-<Header/>
+<Header token={data.token} expiry={data.expiry} user={data.user}/>
 
 <div class="relative container flex flex-col mx-auto px-4 text-gray-900 min-h-[calc(100vh-274px)] lg:min-h-[calc(100vh-218px)]">
     <slot/>

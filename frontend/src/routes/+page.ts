@@ -1,4 +1,4 @@
-import {fetchWithinLoad} from "$lib/auth/fetchClient";
+import {fetchWithinLoad} from "$lib/auth/fetchWrappers";
 import type {Metadata, Rating} from "$lib/types";
 import {apiBaseUrl} from "$lib/constants";
 

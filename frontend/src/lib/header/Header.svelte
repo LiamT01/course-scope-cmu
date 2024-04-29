@@ -7,9 +7,13 @@
     import NavLinks from "$lib/header/NavLinks.svelte";
     import SearchInput from "$lib/search/SearchInput.svelte";
     import {openLogInModal} from "../modal/stores";
-    import {userStore} from "$lib/auth/stores";
-    import {logOutWithinPage} from "$lib/auth/authFetch";
+    import {logOutWithinPage} from "$lib/auth/authFetchClient";
     import {ArrowLeftToBracketOutline, ArrowRightToBracketOutline, ChartOutline} from "flowbite-svelte-icons";
+    import type {User} from "$lib/types";
+
+    export let token: string | null;
+    export let expiry: string | null;
+    export let user: User | null;
 
     const links: { label: string, url: string }[] = [
         {label: 'Home', url: '/'},
@@ -77,7 +81,7 @@
 
     const logOut = async () => {
         openDropdown = false;
-        await logOutWithinPage();
+        await logOutWithinPage(token, expiry);
     }
 </script>
 
@@ -102,7 +106,7 @@
 
         <div class="flex items-center md:order-last">
             <Avatar class="mx-4 md:ml-12 cursor-pointer my-1 md:my-0.5 w-8 md:w-9 h-8 md:h-9" id="avatar-menu"
-                    src={$userStore? "/authenticated-avatar.png" : "/anonymous-avatar.png"}/>
+                    src={user? "/authenticated-avatar.png" : "/anonymous-avatar.png"}/>
             <Burger
                     class="md:hidden w-10 h-10"
                     id="navbar-burger"
@@ -112,10 +116,10 @@
 
         <Dropdown bind:open={openDropdown} class="border rounded-lg min-w-36" placement="bottom"
                   triggeredBy="#avatar-menu">
-            {#if $userStore}
+            {#if user}
                 <div transition:fade={{duration: 100}}>
                     <DropdownHeader>
-                        <span class="block text-sm">{$userStore.username}</span>
+                        <span class="block text-sm">{user.username}</span>
                     </DropdownHeader>
                     <DropdownItem class="flex gap-x-4 items-center" href="/account/me">
                         <ChartOutline class="w-4 h-4"/>

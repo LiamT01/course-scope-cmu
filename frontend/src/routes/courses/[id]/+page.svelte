@@ -2,30 +2,30 @@
     import CourseDetailCard from "$lib/course-card/CourseDetailCard.svelte";
     import RatingRubric from "$lib/rating/RatingRubric.svelte";
     import RatingEditForm from "$lib/rating/RatingEditForm.svelte";
-    import type {Course, CourseOffering, Metadata, Rating, RatingStats} from "$lib/types";
+    import type {Course, CourseOffering, Metadata, Rating, RatingStatsT, User} from "$lib/types";
     import RatingCard from "$lib/rating-card/RatingCard.svelte";
     import Pagination from "$lib/pagination/Pagination.svelte";
     import {goto} from "$app/navigation";
     import SearchFilters from "$lib/search/SearchFilters.svelte";
     import makeQueryParams from "$lib/util/makeQueryParams";
-    import {userStore} from "$lib/auth/stores";
     import {openLogInModal} from "$lib/modal/stores";
     import Title from "$lib/section/Title.svelte";
-    import {LinkOutline} from "flowbite-svelte-icons";
-    import GhostButton from "$lib/button/GhostButton.svelte";
     import OutlineButton from "$lib/button/OutlineButton.svelte";
 
     export let data: {
         course: Course,
         courseOfferings: CourseOffering[],
         ratings: Rating[],
-        stats: RatingStats,
+        stats: RatingStatsT,
         sort: string,
         semester: string,
         year: string,
         instructorIDs: string[],
         overall: string,
         metadata: Metadata,
+        token: string | null,
+        expiry: string | null,
+        user: User | null,
     };
 
     let offeringOptions: { value: number, name: string }[] = [
@@ -61,18 +61,8 @@
         .flat()
         .map(instructor => ({value: instructor.id.toString(), name: instructor.name}));
 
-    let reportAbuseModal = false;
-
-    const openReportAbuse = () => {
-        reportAbuseModal = true;
-    }
-
-    const closeReportAbuse = () => {
-        reportAbuseModal = false;
-    }
-
     const onContributeRating = () => {
-        if ($userStore) {
+        if (data.user) {
             const elementTop = document.getElementById("rating-edit-form")?.getBoundingClientRect().top ?? 0;
             const y = elementTop - document.body.getBoundingClientRect().top;
             window.scrollTo({top: y, behavior: "smooth"});
@@ -122,7 +112,6 @@
     //     goto(`?${allQuery}`)
     //         .then(() => scrollTo({top: currentScrollY}))
     //         .then(scrollToFirstRating)
-    //         .then(() => console.log("After submit success"))
     // }
 
     const previous = () => {
@@ -207,7 +196,7 @@
             <div class="space-y-4" id="search-filters">
                 <Title>Search filters</Title>
                 <SearchFilters bind:instructors={data.instructorIDs}
-                               bind:overall={data.overall} bind:semester={data.semester}
+                               bind:semester={data.semester}
                                bind:sort={data.sort}
                                bind:year={data.year}
                                {instructorOptions}
@@ -222,7 +211,7 @@
                     <Title>User ratings ({data.metadata.total})</Title>
                     {#each data.ratings as rating (rating.id)}
                         <!--                                            <RatingDetailCard rating={rating} onReportAbuse={openReportAbuse}/>-->
-                        <RatingCard {rating}/>
+                        <RatingCard token={data.token} expiry={data.expiry} user={data.user} {rating}/>
                     {/each}
                     <Pagination class="place-self-center" metadata={data.metadata} on:next={next} on:previous={previous}
                                 on:jump={jump} icon/>
@@ -239,10 +228,10 @@
         </main>
     </div>
 
-    {#if $userStore}
+    {#if data.user}
         <div class="space-y-4" id="rating-edit-form">
             <Title>New rating</Title>
-            <RatingEditForm {offeringOptions} on:success={scrollToFirstRating}/>
+            <RatingEditForm token={data.token} expiry={data.expiry} {offeringOptions} on:success={scrollToFirstRating}/>
         </div>
     {/if}
 </div>

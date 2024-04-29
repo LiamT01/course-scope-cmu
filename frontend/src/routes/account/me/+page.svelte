@@ -1,15 +1,14 @@
 <script lang="ts">
-    import {userStore} from "$lib/auth/stores";
     import {format} from "date-fns";
     import {Avatar} from "flowbite-svelte";
     import {CalendarMonthOutline} from "flowbite-svelte-icons";
     import Pagination from "$lib/pagination/Pagination.svelte";
     import RatingCard from "$lib/rating-card/RatingCard.svelte";
-    import type {Metadata, Rating, UserStats} from "$lib/types";
+    import type {Metadata, Rating, User, UserStats} from "$lib/types";
     import {goto} from "$app/navigation";
     import OutlineButton from "$lib/button/OutlineButton.svelte";
 
-    export let data: { metadata: Metadata, ratings: Rating[], token: string, expiry: string, userStats: UserStats };
+    export let data: { metadata: Metadata, ratings: Rating[], token: string, expiry: string, userStats: UserStats, user : User | null };
 
     const previous = () => {
         if (data.metadata.current_page > data.metadata.first_page) {
@@ -31,17 +30,17 @@
     };
 </script>
 
-{#if $userStore}
+{#if data.user}
     <div class="flex flex-col gap-y-2">
         <div>
             <div class="px-4 pt-4 pb-6 flex flex-col sm:flex-row gap-x-8 gap-y-4 sm:items-center justify-between bg-gradient-to-b from-white via-cyan-100 via-30%">
                 <div class="flex gap-x-6 items-center">
                     <Avatar class="ring-2 ring-white w-16 h-16" src="/authenticated-avatar.png"/>
                     <div>
-                        <p class="font-medium text-lg">{$userStore.username}</p>
+                        <p class="font-medium text-lg">{data.user?.username}</p>
                         <p class="text-sm text-gray-500 flex items-center gap-x-2">
                             <CalendarMonthOutline class="w-4 h-4"/>
-                            Joined {format($userStore.created_at, 'MMM d, yyyy')}</p>
+                            Joined {format(data.user.created_at, 'MMM d, yyyy')}</p>
                     </div>
                 </div>
 
@@ -65,7 +64,7 @@
         <div class="flex flex-col gap-y-4">
             {#if data.ratings.length > 0}
                 {#each data.ratings as rating (rating.id)}
-                    <RatingCard {rating} showCourseDetail/>
+                    <RatingCard token={data.token} expiry={data.expiry} user={data.user} {rating} showCourseDetail/>
                 {/each}
 
                 <div class="mx-auto">

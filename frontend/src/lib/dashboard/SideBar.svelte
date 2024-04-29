@@ -1,13 +1,7 @@
 <script>
     import {page} from '$app/stores';
     import {Sidebar, SidebarGroup, SidebarItem, SidebarWrapper} from 'flowbite-svelte';
-    import {
-        FileEditSolid,
-        ThumbsDownSolid,
-        ThumbsUpSolid,
-        UserCircleSolid,
-        UserSettingsSolid, UserSolid
-    } from 'flowbite-svelte-icons';
+    import {ThumbsDownSolid, ThumbsUpSolid, UserSettingsSolid, UserSolid} from 'flowbite-svelte-icons';
 
     $: activeUrl = $page.url.pathname;
 

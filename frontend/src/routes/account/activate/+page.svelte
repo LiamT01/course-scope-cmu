@@ -1,6 +1,6 @@
 <script lang="ts">
     import PrimaryButton from "$lib/button/PrimaryButton.svelte";
-    import {activateAccountWithinPage} from "$lib/auth/authFetch";
+    import {activateAccountWithinPage} from "$lib/auth/authFetchClient";
     import {goto} from "$app/navigation";
 
     export let data: { token: string | null };

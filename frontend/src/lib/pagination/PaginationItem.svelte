@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { twMerge } from 'tailwind-merge';
-    import { getContext } from 'svelte';
+    import {twMerge} from 'tailwind-merge';
+    import {getContext} from 'svelte';
 
     export let active: boolean = false;
     export let activeClass: string = 'text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white';
@@ -27,7 +27,8 @@
 <!--    <slot />-->
 <!--</svelte:element>-->
 
-<svelte:element this='button' class={defaultClass} on:blur on:change on:click on:focus on:keydown on:keypress on:keyup on:mouseenter on:mouseleave on:mouseover>
-    <slot />
+<svelte:element class={defaultClass} on:blur on:change on:click on:focus on:keydown on:keypress on:keyup on:mouseenter
+                on:mouseleave on:mouseover this='button'>
+    <slot/>
 </svelte:element>
 

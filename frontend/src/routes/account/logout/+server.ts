@@ -1,5 +1,5 @@
 import type {RequestHandler} from './$types';
-import {isTokenValid} from "$lib/auth/stores";
+import {isTokenValid} from "$lib/auth/tokenValidity";
 import {apiBaseUrl} from "$lib/constants";
 
 export const POST: RequestHandler = async ({fetch, cookies}) => {

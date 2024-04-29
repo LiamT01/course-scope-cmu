@@ -11,31 +11,34 @@
     import Clock from "$lib/rating/Clock.svelte";
     import Laugh from "$lib/rating/Laugh.svelte";
     import RatingIcons from "$lib/rating/RatingIcons.svelte";
-    import {submitRatingWithinPage} from "$lib/auth/authFetch";
-    import {invalidateAll} from "$app/navigation";
+    import {submitRatingWithinPage} from "$lib/auth/authFetchClient";
 
     const dispatch = createEventDispatcher();
 
+    export let token: string | null;
+    export let expiry: string | null;
     export let offeringOptions: { value: number, name: string }[];
     export let ratingID: number | undefined = undefined;
 
     const onSubmit: (e: Event) => void = async (e) => {
         const response = await submitRatingWithinPage(e, {
-            rating_id: ratingID,
-            offering_id: offeringID,
-            overall,
-            teaching,
-            materials,
-            value,
-            difficulty,
-            workload,
-            grading,
-            comment,
-        });
+                rating_id: ratingID,
+                offering_id: offeringID,
+                overall,
+                teaching,
+                materials,
+                value,
+                difficulty,
+                workload,
+                grading,
+                comment,
+            },
+            token,
+            expiry
+        );
 
         if (response.success) {
             onClear();
-            await invalidateAll();
             dispatch('success');
         }
     };
