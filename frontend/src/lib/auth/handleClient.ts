@@ -26,13 +26,7 @@ export async function handleTokenExpiryClient(
                 displayErrors(data.message);
             }
 
-            userStore.set(null);
-            tokenStore.set(null);
-            expiryStore.set(null);
-
-            if (withinPage) {
-                await invalidateAll();
-            }
+            await invalidateAll();
         } catch (e) {
             console.error(e);
         }

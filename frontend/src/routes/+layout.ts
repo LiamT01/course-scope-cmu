@@ -6,6 +6,7 @@ import {dev} from '$app/environment';
 import {inject} from '@vercel/analytics';
 import {injectSpeedInsights} from '@vercel/speed-insights/sveltekit';
 import {apiBaseUrl} from "$lib/constants";
+import {invalidateAll} from "$app/navigation";
 
 inject({mode: dev ? 'development' : 'production'});
 injectSpeedInsights();
@@ -13,10 +14,13 @@ injectSpeedInsights();
 export const ssr = false;
 
 export const load = async ({data, fetch}) => {
+    tokenStore.set(null);
+    expiryStore.set(null);
+    userStore.set(null);
+
     if (!data.token || !data.expiry || !isTokenValid(data.expiry)) {
         return;
     }
-
 
     const userResponse = await fetchWithinLoad(
         fetch,
@@ -28,10 +32,10 @@ export const load = async ({data, fetch}) => {
     )
 
     if (userResponse.ok) {
+        const userData: User = await userResponse.json();
+
         tokenStore.set(data.token);
         expiryStore.set(data.expiry);
-
-        const userData: User = await userResponse.json();
         userStore.set(userData);
 
         if (!userData.activated) {
@@ -39,5 +43,11 @@ export const load = async ({data, fetch}) => {
                 "Your account is not activated. You can request a new activation link in the dashboard."
             );
         }
+    } else {
+        await fetch('/account/logout', {
+            method: 'POST',
+        });
+
+        await invalidateAll();
     }
 }

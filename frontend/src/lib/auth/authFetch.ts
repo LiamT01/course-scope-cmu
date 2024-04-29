@@ -87,10 +87,6 @@ export const logOutWithinPage = async () => {
         method: 'POST',
     })
 
-    userStore.set(null);
-    tokenStore.set(null);
-    expiryStore.set(null);
-
     await invalidateAll();
 
     if (get(page).url.pathname.startsWith("/account/me")) {

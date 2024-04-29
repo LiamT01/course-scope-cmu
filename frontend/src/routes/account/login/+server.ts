@@ -32,12 +32,14 @@ export const POST: RequestHandler = async ({request, fetch, cookies}) => {
             secure: true,
             sameSite: 'strict',
             path: '/',
+            expiry: new Date(data.expiry),
         });
         cookies.set('expiry', data.expiry, {
             httpOnly: true,
             secure: true,
             sameSite: 'strict',
             path: '/',
+            expiry: new Date(data.expiry),
         });
 
         return new Response(JSON.stringify({
