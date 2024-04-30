@@ -2,13 +2,8 @@ import {isTokenValid} from "$lib/auth/tokenValidity";
 import {addErrorToast} from "$lib/toast/stores";
 import {fetchWithinLoad} from "$lib/auth/fetchWrappers";
 import type {User} from "$lib/types";
-import {browser, dev} from '$app/environment';
-import {inject} from '@vercel/analytics';
-import {injectSpeedInsights} from '@vercel/speed-insights/sveltekit';
+import {browser} from '$app/environment';
 import {apiBaseUrl} from "$lib/constants";
-
-inject({mode: dev ? 'development' : 'production'});
-injectSpeedInsights();
 
 // export const ssr = false;
 
