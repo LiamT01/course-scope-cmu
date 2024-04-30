@@ -30,14 +30,14 @@ export const POST: RequestHandler = async ({request, fetch, cookies}) => {
         cookies.set('token', data.token, {
             httpOnly: true,
             secure: true,
-            sameSite: 'strict',
+            sameSite: 'none',
             path: '/',
             expires: new Date(data.expiry),
         });
         cookies.set('expiry', data.expiry, {
             httpOnly: true,
             secure: true,
-            sameSite: 'strict',
+            sameSite: 'none',
             path: '/',
             expires: new Date(data.expiry),
         });

@@ -26,20 +26,17 @@ const fetchBase = async (
         init.headers["Authorization"] = `Bearer ${init.token}`;
     }
 
-    try {
-        const response = await fetch(input, init);
+    const response = await fetch(input, init);
 
-        if (!response.ok && browser) {
-            const data = await response.json();
+    if (!response.ok) {
+        const data = await response.json();
+        if (browser) {
             displayErrors(data.detail ?? data.message);
-            return new Response(JSON.stringify(data), {status: response.status});
         }
-
-        return response;
-    } catch (e) {
-        console.error(e);
-        throw e;
+        return new Response(JSON.stringify(data), {status: response.status});
     }
+
+    return response;
 }
 
 // (1) If token is expired, logs user out and prompts user to log in again.
