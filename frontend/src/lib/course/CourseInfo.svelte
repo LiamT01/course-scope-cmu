@@ -19,7 +19,7 @@
 
 {#if course || courseOffering}
     <div class={twMerge('relative', $$props.class)}>
-        <GhostButton class="h-8 w-8" id="course-info-{key}" size="xs">
+        <GhostButton class="h-10 w-10" id="course-info-{key}" size="xs">
             <DotsHorizontalOutline class="h-4 w-4"/>
         </GhostButton>
 

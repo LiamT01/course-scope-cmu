@@ -11,7 +11,7 @@
 </script>
 
 <div class={twMerge("text-sm flex gap-x-2 items-center", $$props.class)}>
-    <GhostButton class="w-8 h-8" on:click={onLike} size="xs">
+    <GhostButton class="w-10 h-10" on:click={onLike} size="xs">
         {#if likedByUser}
             <ThumbsUpSolid class="w-4 h-4"/>
         {:else}
@@ -19,7 +19,7 @@
         {/if}
     </GhostButton>
     {netLikes}
-    <GhostButton class="ml-4 w-8 h-8" on:click={onDislike} size="xs">
+    <GhostButton class="ml-4 w-10 h-10" on:click={onDislike} size="xs">
         {#if dislikedByUser}
             <ThumbsDownSolid class="w-4 h-4"/>
         {:else}

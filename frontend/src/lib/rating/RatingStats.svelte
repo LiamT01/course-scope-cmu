@@ -16,7 +16,7 @@
 </script>
 
 <div class={twMerge("relative", $$props.class)}>
-    <GhostButton class="w-8 h-8" id="rating-stats-{key}" size="xs">
+    <GhostButton class="w-10 h-10" id="rating-stats-{key}" size="xs">
         <InfoCircleOutline class="w-4 h-4"/>
     </GhostButton>
     <div use:clickOutside={{callback: handleClickOutside, excludedElement: document.getElementById(`rating-stats-${key}`)}}>

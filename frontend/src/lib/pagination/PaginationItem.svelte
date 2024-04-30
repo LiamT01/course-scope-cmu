@@ -13,7 +13,7 @@
     let defaultClass: string;
     $: defaultClass = twMerge(
         'flex items-center justify-center font-medium',
-        large ? 'h-7 w-7 sm:h-10 sm:w-10 text-base' : 'h-7 w-7 sm:h-10 sm:w-10 px-3 text-sm',
+        large ? 'h-10 w-10 text-base' : 'h-10 w-10 px-3 text-sm',
         group ? '' : table ? 'rounded' : 'rounded-lg',
         // table || 'border border-gray-300 dark:border-gray-700 dark:bg-gray-800',
         table ? '' : 'border',

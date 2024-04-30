@@ -237,10 +237,10 @@
                                {onLike}
                 />
                 {#if user?.id === rating.user.id}
-                    <GhostButton on:click={() => openRatingEditModal = true} class="h-8 w-8" size="xs">
+                    <GhostButton on:click={() => openRatingEditModal = true} class="h-10 w-10" size="xs">
                         <EditOutline class="h-4 w-4"/>
                     </GhostButton>
-                    <GhostButton on:click={() => openDeleteConfirmationModal = true} class="h-8 w-8" size="xs">
+                    <GhostButton on:click={() => openDeleteConfirmationModal = true} class="h-10 w-10" size="xs">
                         <TrashBinOutline class="h-4 w-4"/>
                     </GhostButton>
                 {/if}

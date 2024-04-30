@@ -19,7 +19,7 @@
             href={link.url}
             on:click
             class={twMerge(
-                ifCurrentUrl($page.url.pathname, link.url) ? "text-gray-900": "text-gray-400",
+                ifCurrentUrl($page.url.pathname, link.url) ? "text-gray-900": "text-gray-500",
                 "font-medium hover:text-gray-600",
                 $$props.class,
             )}
