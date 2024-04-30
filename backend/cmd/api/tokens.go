@@ -153,14 +153,14 @@ func (h *Handler) CreateAuthToken(c echo.Context) error {
 	return c.JSON(http.StatusCreated, tokenOut)
 }
 
-// DeleteAllAuthTokensForUser requires no token
-func (h *Handler) DeleteAllAuthTokensForUser(c echo.Context) error {
+// DeleteMyExpiredTokens requires no token
+func (h *Handler) DeleteMyExpiredTokens(c echo.Context) error {
 	user, err := h.GetContextUserOrAuthUser(c)
 	if err != nil {
 		return err
 	}
 
-	if err := h.DeleteAllTokensForUser(user.ID, model.ScopeType_Auth); err != nil {
+	if err := h.DeleteExpiredTokensForUser(user.ID); err != nil {
 		return err
 	}
 

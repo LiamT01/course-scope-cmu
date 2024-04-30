@@ -10,7 +10,7 @@ export const POST: RequestHandler = async ({fetch, cookies}) => {
     cookies.delete('expiry', {path: '/'});
 
     if (isTokenValid(expiry)) {
-        await fetch(`${apiBaseUrl}/tokens/auth/me`, {
+        await fetch(`${apiBaseUrl}/tokens/my-expired`, {
             method: 'DELETE',
             headers: {
                 'Authorization': `Bearer ${token}`,

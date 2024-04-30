@@ -147,7 +147,7 @@ func main() {
 	e.POST("/tokens/auth", h.CreateAuthToken)
 	e.POST("/tokens/activation", h.RequireAuth(h.SendActToken))
 	e.POST("/tokens/password-reset", h.SendPwdResetToken)
-	e.DELETE("/tokens/auth/me", h.DeleteAllAuthTokensForUser)
+	e.DELETE("/tokens/my-expired", h.DeleteMyExpiredTokens)
 
 	// Graceful shutdown
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt)

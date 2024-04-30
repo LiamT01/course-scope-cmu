@@ -56,7 +56,10 @@ func (h *Handler) Authenticate(next echo.HandlerFunc) echo.HandlerFunc {
 		if err != nil {
 			switch {
 			case errors.Is(err, qrm.ErrNoRows):
-				return ErrorInvalidAuthToken
+				//	Here it should not be strict
+				//	Just set it to anonymous user and let client handle expired tokens
+				h.contextSetUser(c, schemas.AnonymousUser)
+				return next(c)
 			default:
 				return err
 			}
