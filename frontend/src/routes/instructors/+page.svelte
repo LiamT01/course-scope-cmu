@@ -53,6 +53,11 @@
 
 </script>
 
+<svelte:head>
+    <title>All Instructors - CourseScope CMU</title>
+    <meta name="description" content="All instructors teaching at Carnegie Mellon University."/>
+</svelte:head>
+
 <div class="flex flex-col gap-y-4">
     <Title>All instructors ({data.metadata.total})</Title>
     {#if data.instructors.length > 0}

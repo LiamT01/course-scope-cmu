@@ -59,6 +59,11 @@
 
 </script>
 
+<svelte:head>
+    <title>All Courses - CourseScope CMU</title>
+    <meta name="description" content="All courses offered by Carnegie Mellon University.">
+</svelte:head>
+
 <div class="flex flex-col gap-y-4">
     <Title>All courses ({data.metadata.total})</Title>
     {#if data.courses.length > 0}
