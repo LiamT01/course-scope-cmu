@@ -78,8 +78,8 @@
         } else {
             const response = await fetchWithinPage(`${apiBaseUrl}/ratings/${rating.id}/dislike`, {
                 method: 'POST',
-                expiry,
                 token,
+                expiry,
             });
 
             if (response.ok) {

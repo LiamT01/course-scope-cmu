@@ -20,20 +20,12 @@ export const load = async ({fetch, params, url, data}) => {
     const courseResponse = await fetchWithinLoad(
         fetch,
         `${apiBaseUrl}/courses/${courseID}`,
-        {
-            token: data.token,
-            expiry: data.expiry,
-        }
     );
     const course : Course = await courseResponse.json();
 
     const courseOfferingsResponse = await fetchWithinLoad(
         fetch,
         `${apiBaseUrl}/offerings?course_id=${courseID}&page_size=${listOfferingsPageSize}`,
-        {
-            token: data.token,
-            expiry: data.expiry,
-        }
     );
     const courseOfferingsData: { items: Offering[], metadata: Metadata } = await courseOfferingsResponse.json();
     const courseOfferings = courseOfferingsData.items;
@@ -71,10 +63,6 @@ export const load = async ({fetch, params, url, data}) => {
     const statsResponse = await fetchWithinLoad(
         fetch,
         `${apiBaseUrl}/ratings/stats?${statsAllQuery}`,
-        {
-            token: data.token,
-            expiry: data.expiry,
-        }
     );
     const stats = await statsResponse.json();
 

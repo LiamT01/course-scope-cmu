@@ -3,7 +3,7 @@ import {fetchWithinLoad} from "$lib/auth/fetchWrappers";
 import type {Course, Metadata} from "$lib/types";
 import {apiBaseUrl} from "$lib/constants";
 
-export const load = async ({fetch, url, data}) => {
+export const load = async ({fetch, url}) => {
     const number = url.searchParams.get('number') ?? '';
     const name = url.searchParams.get('name') ?? '';
     const page = url.searchParams.get('page') ?? '1';
@@ -15,10 +15,6 @@ export const load = async ({fetch, url, data}) => {
     const coursesResponse = await fetchWithinLoad(
         fetch,
         `${apiBaseUrl}/courses?${query}`,
-        {
-            token: data.token,
-            expiry: data.expiry,
-        }
     );
 
     const coursesData : {items: Course[], metadata: Metadata} = await coursesResponse.json();
