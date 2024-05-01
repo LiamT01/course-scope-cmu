@@ -174,6 +174,7 @@
 <svelte:head>
     <title>{data.course.number} {data.course.name} - CourseScope CMU</title>
     <meta name="description" content={`Read authentic student reviews and ratings for ${data.course.number} ${data.course.name} at Carnegie Mellon University. Get insights into course quality, instructor effectiveness, and more.`} />
+    <link rel="canonical" href={`https://course-scope-cmu.com/courses/${data.course.id}`}>
 </svelte:head>
 
 <!--Use flex-col with gap-y-4 instead of space-y-4 to avoid mis-positioning of modal backdrop-->

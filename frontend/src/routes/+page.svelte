@@ -31,6 +31,7 @@
 <svelte:head>
     <title>CourseScope CMU</title>
     <meta name="description" content="Explore and evaluate Carnegie Mellon University courses with CourseScope CMU. Find detailed course ratings, instructor insights, and student reviews to make informed decisions about your educational journey at CMU.">
+    <link rel="canonical" href={`https://course-scope-cmu.com`}>
 </svelte:head>
 
 <div class="flex flex-col gap-y-4">

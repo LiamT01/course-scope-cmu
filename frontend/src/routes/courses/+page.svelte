@@ -62,6 +62,7 @@
 <svelte:head>
     <title>All Courses - CourseScope CMU</title>
     <meta name="description" content="All courses offered by Carnegie Mellon University.">
+    <link rel="canonical" href={`https://course-scope-cmu.com/courses`}>
 </svelte:head>
 
 <div class="flex flex-col gap-y-4">

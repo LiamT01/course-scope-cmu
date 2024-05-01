@@ -56,6 +56,7 @@
 <svelte:head>
     <title>All Instructors - CourseScope CMU</title>
     <meta name="description" content="All instructors teaching at Carnegie Mellon University."/>
+    <link rel="canonical" href={`https://course-scope-cmu.com/instructors`}>
 </svelte:head>
 
 <div class="flex flex-col gap-y-4">
