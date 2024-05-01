@@ -1,6 +1,6 @@
 # CourseScope CMU
 
-<img alt="logo" width="160" height="160" src='frontend/static/logo-blue.png'/>
+![logo](./frontend/static/favicon-128x128.png)
 
 CourseScope CMU is a web platform designed for Carnegie Mellon University (CMU) students to review and rate their courses. The website allows students to explore courses, instructors, and specific course offerings while accessing detailed ratings and statistics such as overall quality, teaching effectiveness, material quality, course value, workload, difficulty, and grading. Users can also share their experiences by commenting on courses.
 
@@ -84,7 +84,7 @@ To get CourseScope CMU running locally, follow these steps:
    pnpm dev
    ```
 
-   This will start the SvelteKit frontend on `http://localhost:5173/`.
+   This will start the SvelteKit frontend on `http://localhost:5173`.
 
 ## License
 
