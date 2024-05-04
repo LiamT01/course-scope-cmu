@@ -12,7 +12,7 @@
 
 <Header token={data.token} expiry={data.expiry} user={data.user}/>
 
-<div class="relative container flex flex-col mx-auto px-4 text-gray-900 min-h-[calc(100vh-274px)] lg:min-h-[calc(100vh-218px)]">
+<div class="relative container flex flex-col mx-auto px-4 text-gray-900 min-h-[calc(100vh-278px)] lg:min-h-[calc(100vh-222px)]">
     <slot/>
 </div>
 
