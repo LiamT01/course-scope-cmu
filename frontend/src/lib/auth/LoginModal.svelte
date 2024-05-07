@@ -1,7 +1,7 @@
 <script>
     import {openLogInModal} from "$lib/modal/stores";
     import {submitLoginFormWithinPage} from "$lib/auth/authFetchClient";
-    import {Input, Label} from "flowbite-svelte";
+    import {Helper, Input, Label} from "flowbite-svelte";
     import OutlineButton from "$lib/button/OutlineButton.svelte";
     import PrimaryButton from "$lib/button/PrimaryButton.svelte";
     import Modal from "$lib/modal/Modal.svelte";
@@ -30,6 +30,9 @@
             <Label class="space-y-2">
                 <span>Password</span>
                 <Input name="password" placeholder="••••••••" required type="password"/>
+                <Helper class="text-xs mt-2">
+                    This is NOT your Andrew password! Instead, please create a separate password by signing up below if you haven't already.
+                </Helper>
             </Label>
             <div class="flex items-start">
                 <a class="text-sm text-gray-600 hover:text-gray-900 dark:text-gray-500 dark:hover:text-gray-700"
