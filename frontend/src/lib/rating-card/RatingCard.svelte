@@ -18,9 +18,9 @@
     import RatingEditForm from "$lib/rating/RatingEditForm.svelte";
     import {onMount} from "svelte";
     import OutlineButton from "$lib/button/OutlineButton.svelte";
-    import PrimaryButton from "$lib/button/PrimaryButton.svelte";
     import {deleteRatingWithinPage} from "$lib/auth/authFetchClient";
     import {apiBaseUrl, listOfferingsPageSize} from "$lib/constants";
+    import CriticalButton from "$lib/button/CriticalButton.svelte";
 
     export let token: string | null;
     export let expiry: string | null;
@@ -287,9 +287,9 @@
                 <OutlineButton on:click={() => openDeleteConfirmationModal = false}>
                     Cancel
                 </OutlineButton>
-                <PrimaryButton type="submit">
+                <CriticalButton type="submit">
                     Delete
-                </PrimaryButton>
+                </CriticalButton>
             </div>
         </form>
     </Modal>

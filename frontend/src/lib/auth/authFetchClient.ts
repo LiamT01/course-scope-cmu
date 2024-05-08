@@ -544,3 +544,38 @@ export const deleteRatingWithinPage = async (e: Event, ratingID: number, token: 
 
     return response.ok;
 }
+
+export const deleteAccountLoggedInWithinPage = async (e: Event, token: string | null, expiry: string | null): Promise<boolean> => {
+    e.preventDefault();
+    const form = e.target as HTMLFormElement;
+
+    // Get submit button and disable it
+    const submitButton = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+    const buttonLabel = submitButton.textContent;
+
+    submitButton.disabled = true;
+    submitButton.textContent = "Deleting account...";
+
+    await fetchWithinPage('/account/logout', {
+        method: 'POST',
+        token,
+        expiry,
+    })
+
+    const response = await fetchWithinPage(`${apiBaseUrl}/users/me`, {
+        method: 'DELETE',
+        token,
+        expiry,
+    })
+
+    submitButton.disabled = false;
+    submitButton.textContent = buttonLabel;
+
+    if (response.ok) {
+        addSuccessToast("Your account has been deleted.");
+        await invalidateAll();
+        await goto("/");
+    }
+
+    return response.ok;
+}
