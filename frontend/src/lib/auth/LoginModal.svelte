@@ -10,7 +10,6 @@
 
     const onForgotPassword = async () => {
         $openLogInModal = false;
-        await goto(`/account/password-reset-request?next=${$page.url.pathname}`);
     }
 
     const onSingUp = async () => {
@@ -31,12 +30,13 @@
                 <span>Password</span>
                 <Input name="password" placeholder="••••••••" required type="password"/>
                 <Helper class="text-xs mt-2">
-                    This is NOT your Andrew password! Instead, please create a separate password by signing up below if you haven't already.
+                    This is NOT your Andrew password! Instead, please create a separate password by signing up below if
+                    you haven't already.
                 </Helper>
             </Label>
-            <div class="flex items-start">
+            <div class="flex">
                 <a class="text-sm text-gray-600 hover:text-gray-900 dark:text-gray-500 dark:hover:text-gray-700"
-                   href="javascript:" on:click={onForgotPassword}>
+                   href="/account/password-reset-request?next={$page.url.pathname}" on:click={onForgotPassword}>
                     Forgot password?
                 </a>
             </div>
