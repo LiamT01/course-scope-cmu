@@ -55,7 +55,7 @@
     <!--        <div use:clickOutside={{callback: hide, excludedElement: null}}-->
     <div
             class={twMerge("border rounded-lg bg-white shadow p-4 relative max-w-md w-full max-h-full", $$props.class)}>
-        <GhostButton class="w-8 h-8 absolute top-4 end-4 cursor-pointer" on:click={hide} size="xs">
+        <GhostButton class="w-10 h-10 absolute top-3 end-3 cursor-pointer" on:click={hide} size="xs">
             <CloseOutline class="w-3 h-3"/>
         </GhostButton>
         <slot/>
