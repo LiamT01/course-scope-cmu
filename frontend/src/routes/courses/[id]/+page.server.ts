@@ -1,3 +1,3 @@
-import {getTokenFromCookies} from "$lib/auth/getToken";
+import { getTokenFromCookies } from '$lib/auth/getToken';
 
 export const load = getTokenFromCookies;

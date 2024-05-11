@@ -12,29 +12,29 @@ const selectorTabbable: string = `
 
 // Assuming you have some type for the Action, replace 'any' with the appropriate type
 export default function focusTrap(node: HTMLElement): { destroy: () => void } {
-    const handleFocusTrap = (e: KeyboardEvent): void => {
-        let isTabPressed: boolean = e.key === 'Tab' || e.keyCode === 9;
+	const handleFocusTrap = (e: KeyboardEvent): void => {
+		const isTabPressed: boolean = e.key === 'Tab' || e.keyCode === 9;
 
-        if (!isTabPressed) {
-            return;
-        }
+		if (!isTabPressed) {
+			return;
+		}
 
-        const tabbable: HTMLElement[] = Array.from(node.querySelectorAll(selectorTabbable));
+		const tabbable: HTMLElement[] = Array.from(node.querySelectorAll(selectorTabbable));
 
-        let index: number = tabbable.indexOf(document.activeElement as HTMLElement ?? node);
-        if (index === -1 && e.shiftKey) index = 0;
-        index += tabbable.length + (e.shiftKey ? -1 : 1);
-        index %= tabbable.length;
-        tabbable[index].focus();
+		let index: number = tabbable.indexOf((document.activeElement as HTMLElement) ?? node);
+		if (index === -1 && e.shiftKey) index = 0;
+		index += tabbable.length + (e.shiftKey ? -1 : 1);
+		index %= tabbable.length;
+		tabbable[index].focus();
 
-        e.preventDefault();
-    }
+		e.preventDefault();
+	};
 
-    document.addEventListener('keydown', handleFocusTrap, true);
+	document.addEventListener('keydown', handleFocusTrap, true);
 
-    return {
-        destroy() {
-            document.removeEventListener('keydown', handleFocusTrap, true);
-        }
-    };
+	return {
+		destroy() {
+			document.removeEventListener('keydown', handleFocusTrap, true);
+		}
+	};
 }

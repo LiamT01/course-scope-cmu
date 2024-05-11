@@ -1,16 +1,16 @@
 <script>
-    import {Button} from "flowbite-svelte";
-    import {twMerge} from "tailwind-merge";
+	import { Button } from 'flowbite-svelte';
+	import { twMerge } from 'tailwind-merge';
 </script>
 
 <Button
-        {...$$restProps}
-        class={twMerge(
-            "bg-red-600 border-red-300 text-white dark:hover:bg-red-700 hover:bg-red-700 rounded-lg",
-            $$props.class,
-        )}
-        color="none"
-        on:click
+	{...$$restProps}
+	class={twMerge(
+		'rounded-lg border-red-300 bg-red-600 text-white hover:bg-red-700 dark:hover:bg-red-700',
+		$$props.class
+	)}
+	color="none"
+	on:click
 >
-    <slot/>
+	<slot />
 </Button>
