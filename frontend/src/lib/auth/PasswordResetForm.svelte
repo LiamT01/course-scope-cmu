@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Helper, Input, Label } from 'flowbite-svelte';
+	import {Helper, Input, Label, Toggle} from 'flowbite-svelte';
 	import PrimaryButton from '$lib/button/PrimaryButton.svelte';
 	import { twMerge } from 'tailwind-merge';
 	import {
@@ -13,6 +13,7 @@
 	type color = 'base' | 'red' | 'green';
 	let passwordColor: color = 'base';
 	let repeatPasswordColor: color = 'base';
+	let passwordVisible: bool = false;
 
 	const onSubmit = async (e: Event) => {
 		const response: FormSubmitResponse = await submitPasswordResetFormWithinPage(e, token);
@@ -39,8 +40,11 @@
 <form class={twMerge('space-y-4', $$props.style)} on:submit={onSubmit}>
 	<h3 class="text-xl font-medium dark:text-white">Reset your password</h3>
 	<Label class="space-y-2">
-		<span>Password</span>
-		<Input color={passwordColor} name="password" placeholder="••••••••" required type="password" autocomplete="new-password"/>
+		<div class="flex justify-between items-center">
+			<span>Password</span>
+			<Toggle size="small" class="text-xs" bind:checked={passwordVisible}>{passwordVisible ? "Show password" : "Hide password"}</Toggle>
+		</div>
+		<Input color={passwordColor} name="password" placeholder="••••••••" required type="{passwordVisible ? 'text' : 'password'}" autocomplete="new-password"/>
 		<Helper class="mt-2 text-xs">
 			Your password must be 8-64 characters and contain at least: (1) One digit; (2) One lowercase
 			letter; (3) One uppercase letter; (4) One special character.
@@ -53,7 +57,7 @@
 			name="repeat_password"
 			placeholder="••••••••"
 			required
-			type="password"
+			type="{passwordVisible ? 'text' : 'password'}"
 			autocomplete="new-password"
 		/>
 	</Label>
