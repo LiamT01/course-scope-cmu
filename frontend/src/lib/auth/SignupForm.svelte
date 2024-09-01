@@ -64,7 +64,7 @@
 	</Label>
 	<Label class="space-y-2">
 		<span>Password</span>
-		<Input color={passwordColor} name="password" placeholder="••••••••" required type="password" />
+		<Input color={passwordColor} name="password" placeholder="••••••••" required type="password" autocomplete="new-password"/>
 		<Helper class="mt-2 text-xs">
 			Your password must be 8-64 characters and contain at least: (1) One digit; (2) One lowercase
 			letter; (3) One uppercase letter; (4) One special character.
@@ -78,6 +78,7 @@
 			placeholder="••••••••"
 			required
 			type="password"
+			autocomplete="new-password"
 		/>
 	</Label>
 	<PrimaryButton class="w-full" size="sm" type="submit">Sign up</PrimaryButton>
